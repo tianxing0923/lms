@@ -1,0 +1,173 @@
+.cf:before,
+.cf:after {
+  content: ' ';
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.block {
+  display: block;
+}
+.inblock {
+  display: inline-block;
+}
+.hide {
+  display: none;
+}
+.tal {
+  text-align: left;
+}
+.tar {
+  text-align: right;
+}
+.tac {
+  text-align: center;
+}
+.toe {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pa {
+  position: absolute;
+}
+.pr {
+  position: relative;
+}
+.pf {
+  position: fixed;
+}
+.nf {
+  float: none !important;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.nm {
+  margin: 0 !important;
+}
+.nlm {
+  margin-left: 0 !important;
+}
+.nrm {
+  margin-right: 0 !important;
+}
+.ntm {
+  margin-top: 0 !important;
+}
+.nbm {
+  margin-bottom: 0 !important;
+}
+.np {
+  padding: 0 !important;
+}
+.nlp {
+  padding-left: 0 !important;
+}
+.nrp {
+  padding-right: 0 !important;
+}
+.ntp {
+  padding-top: 0 !important;
+}
+.nbp {
+  padding-bottom: 0 !important;
+}
+.nb {
+  border: 0 !important;
+}
+.nlb {
+  border-left: 0 !important;
+}
+.nrb {
+  border-right: 0 !important;
+}
+.ntb {
+  border-top: 0 !important;
+}
+.nbb {
+  border-bottom: 0 !important;
+}
+.usn {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.vat {
+  vertical-align: top !important;
+}
+.vam {
+  vertical-align: middle !important;
+}
+.vab {
+  vertical-align: bottom !important;
+}
+.cp {
+  cursor: pointer;
+}
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity .3s linear;
+  transition: opacity .3s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+.trsd {
+  -webkit-transition-duration: .15s;
+          transition-duration: .15s;
+}
+body {
+  font-family: 'Hiragino Sans GB', 'Helveica Neue', 'Roboto', 'Microsoft YaHei', Tahoma, Helvetica, Arial, sans-serif;
+  color: #333;
+  background-color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100vh;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+main {
+  padding-top: 20px;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+}
+.material-icons {
+  vertical-align: middle;
+}
+.sidebar .user-info .avatar {
+  padding-left: 97px;
+}
+.sidebar .user-info .avatar .circle {
+  width: 67px;
+  height: 67px;
+}
+.sidebar .hot-top .title {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 8px 15px;
+}
+.sidebar .hot-top .collection-item .index {
+  display: inline-block;
+  width: 30px;
+  padding-right: 10px;
+  text-align: right;
+}
+.index-wrapper .card-action .material-icons {
+  margin-right: 5px;
+}
+.index-wrapper .card-action .count {
+  margin-right: 15px;
+}
