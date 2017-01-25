@@ -1,31 +1,45 @@
-aside.sidebar.col.s3
-  ul.user-info.collection
-    li.collection-item.avatar
-      img.circle(src='http://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png', alt='')
-      span.title 田星
-      p
-        | Web前端开发
-        br
-        | 平台开发部
-    li.collection-item
-      a(href='/article/list') 我的文章
-    li.collection-item
-      a(href='/article/add') 分享技术
-  ul.hot-top.collection
-    li.collection-header.blue.white-text
-      .title 热门课程TOP10
-    li.collection-item.toe
-      span.index 1.
-      a(href='/article/list') 默哥驾到：墨麟转型之始
-    li.collection-item.toe
-      span.index 3.
-      a(href='/article/list') 默哥驾到：墨麟转型之始
-    li.collection-item.toe
-      span.index 4.
-      a(href='/article/list') 默哥驾到：墨麟转型之始
-    li.collection-item.toe
-      span.index 5.
-      a(href='/article/list') 默哥驾到：墨麟转型之始
-    li.collection-item.toe
-      span.index 6.
-      a(href='/article/list') 默哥驾到：墨麟转型之始
+aside(ng-controller="sidebar", flex='20')
+  <md-card class='nm' md-theme="default">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">田星</span>
+        <span class="md-subhead">
+          | Web前端开发
+          br
+          | 平台开发部
+        </span>
+      </md-card-title-text>
+      <md-card-title-media>
+        <div class="md-media-sm card-media">
+          img(src='http://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png')
+        </div>
+      </md-card-title-media>
+    </md-card-title>
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button class="md-primary">我的文章</md-button>
+      <md-button class="md-primary">分享技术</md-button>
+    </md-card-actions>
+  </md-card>
+  <md-list>
+    <md-subheader class="md-no-sticky">热门课程TOP10</md-subheader>
+    <md-list-item>
+      <md-button class='md-primary md-no-style md-list-item-inner' ui-sref='article'>
+        | 撒旦防撒旦发射点发
+      </md-button>
+    </md-list-item>
+    <md-list-item>
+      <md-button class='md-primary md-no-style md-list-item-inner' ui-sref='article'>
+        | 撒旦防撒旦发射点发
+      </md-button>
+    </md-list-item>
+    <md-list-item>
+      <md-button class='md-primary md-no-style md-list-item-inner' ui-sref='article'>
+        | 撒旦防撒旦发射点发
+      </md-button>
+    </md-list-item>
+    <md-list-item>
+      <md-button class='md-primary md-no-style md-list-item-inner' ui-sref='article'>
+        | 撒旦防撒旦发射点发
+      </md-button>
+    </md-list-item>
+  </md-list>

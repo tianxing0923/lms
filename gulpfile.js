@@ -7,6 +7,7 @@ var imagemin = require('gulp-imagemin');
 var clean = require('gulp-clean');
 var autoprefixer = require('gulp-autoprefixer');
 var plumber = require('gulp-plumber');
+var inject = require('gulp-inject');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 
@@ -36,6 +37,8 @@ gulp.task('default', function () {
     proxy: 'http://localhost:3000/',
     reloadDelay: 1000
   });
+
+ gulp.watch('public/**/*', ['inject']);
 
   gulp.watch(['server/**/*', 'public/**/*'], browserSync.reload);
 });
@@ -89,6 +92,22 @@ gulp.task('images', function () {
   return gulp.src('public/assets/images/**')
     .pipe(imagemin())
     .pipe(gulp.dest(path.images));
+});
+
+gulp.task('inject', function () {
+  var target = gulp.src('./server/views/layouts/default.pug');
+  var sources = gulp.src([
+    './public/services/*.js',
+    './public/filters/*.js',
+    './public/directives/*.js',
+    './public/*.js',
+    './public/config/*.js',
+    './public/controllers/**/*.js'
+  ], {
+    read: false
+  });
+  return target.pipe(inject(sources))
+    .pipe(gulp.dest('./server/views/layouts'));
 });
 
 gulp.task('dist', function (cb) {

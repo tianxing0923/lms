@@ -1,15 +1,29 @@
 'use strict';
 
-lmsApp.config(['$routeProvider', function ($routeProvider) {
-  $routeProvider.when('/', {
-    controller: 'indexCtrl',
-    templateUrl: '/'
+lmsApp.config(['$locationProvider', '$stateProvider', function ($locationProvider, $stateProvider) {
+  $locationProvider.html5Mode(true);
+  $stateProvider.state('home', {
+    url: '/',
+    templateUrl: '/templates/article/list'
   });
-  $routeProvider.when('/audio', {
-    templateUrl: '/views/media/audio.html',
-    controller: 'media.audio'
+  $stateProvider.state('essence', {
+    url: '/essence',
+    templateUrl: '/templates/article/list'
   });
-  $routeProvider.otherwise({
-    redirectTo: '/'
+  $stateProvider.state('share', {
+    url: '/share',
+    templateUrl: '/templates/article/list'
+  });
+  $stateProvider.state('qestion', {
+    url: '/qestion',
+    templateUrl: '/templates/article/list'
+  });
+  $stateProvider.state('course', {
+    url: '/course',
+    template: 'bbb'
+  });
+  $stateProvider.state('article', {
+    url: '/article',
+    template: 'ccc'
   });
 }]);

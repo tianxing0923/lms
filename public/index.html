@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="eric tian">
+  <base href="/">
+  <title>企业在线学习系统</title>
+  <link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="/public/assets/css/style.css">
+</head>
+
+<body ng-app="lms" ng-cloak layout="column">
+  <div ng-controller="navCtrl" ng-cloak>
+    <md-content>
+      <md-nav-bar md-selected-nav-item="current" nav-bar-aria-label="navigation links">
+        <md-nav-item md-nav-sref="home" name="home">首页</md-nav-item>
+        <md-nav-item md-nav-sref="course" name="course">课程</md-nav-item>
+        <md-nav-item md-nav-sref="article" name="article">技术交流</md-nav-item>
+      </md-nav-bar>
+    </md-content>
+  </div>
+  <main class="container row">
+    <div class="col s9">
+      <ui-view ng-animate="'view'"></ui-view>
+    </div>
+  </main>
+  <footer class="page-footer blue">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h5 class="white-text">Footer Content</h5>
+          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">&copy; 2016 Made by Eric Tian </div>
+    </div>
+  </footer>
+  <script src="/node_modules/angular/angular.min.js"></script>
+  <script src="/node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="/node_modules/angular-animate/angular-animate.min.js"></script>
+  <script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+  <script src="/node_modules/angular-material/angular-material.min.js"></script>
+  <!-- inject:js -->
+  <!-- endinject -->
+</body>
+
+</html>
