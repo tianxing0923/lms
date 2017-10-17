@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-const notify = require('../mailer');
+// const notify = require('../mailer');
 
 // const Imager = require('imager');
 // const config = require('../../config');
@@ -21,20 +21,14 @@ const setTags = tags => tags.split(',');
  */
 
 const ArticleSchema = new Schema({
-  title: { type : String, default : '', trim : true },
-  body: { type : String, default : '', trim : true },
-  user: { type : Schema.ObjectId, ref : 'User' },
-  comments: [{
-    body: { type : String, default : '' },
-    user: { type : Schema.ObjectId, ref : 'User' },
-    createdAt: { type : Date, default : Date.now }
-  }],
+  title: { type: String, default: '', trim: true },
+  category: { type: Schema.ObjectId, ref: 'Category' },
   tags: { type: [], get: getTags, set: setTags },
-  image: {
-    cdnUri: String,
-    files: []
-  },
-  createdAt  : { type : Date, default : Date.now }
+  content: { type: String, default: '', trim: true },
+  user: { type: Schema.ObjectId, ref: 'User' },
+  readCount: { type: Number, default: 0 },
+  commentCount: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now }
 });
 
 /**
@@ -42,7 +36,7 @@ const ArticleSchema = new Schema({
  */
 
 ArticleSchema.path('title').required(true, 'Article title cannot be blank');
-ArticleSchema.path('body').required(true, 'Article body cannot be blank');
+ArticleSchema.path('content').required(true, 'Article content cannot be blank');
 
 /**
  * Pre-remove hook
@@ -85,7 +79,7 @@ ArticleSchema.methods = {
     imager.upload(images, function (err, cdnUri, files) {
       if (err) return cb(err);
       if (files.length) {
-        self.image = { cdnUri : cdnUri, files : files };
+        self.image = { cdnUri: cdnUri, files: files };
       }
       self.save(cb);
     }, 'article');
@@ -102,17 +96,17 @@ ArticleSchema.methods = {
 
   addComment: function (user, comment) {
     this.comments.push({
-      body: comment.body,
+      content: comment.content,
       user: user._id
     });
 
     if (!this.user.email) this.user.email = 'email@product.com';
 
-    notify.comment({
-      article: this,
-      currentUser: user,
-      comment: comment.body
-    });
+    // notify.comment({
+    //   article: this,
+    //   currentUser: user,
+    //   comment: comment.content
+    // });
 
     return this.save();
   },

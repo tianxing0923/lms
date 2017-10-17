@@ -1,0 +1,19 @@
+div(ng-controller="home" ng-cloak)
+  md-list.article-list
+    md-list-item.md-no-style
+      md-button.md-no-style.md-list-item-inner(ui-sref='article')
+        img.md-avatar(src="http://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png")
+        span 200/300
+        span 精华
+        p 斯蒂芬的说法斯蒂芬森的方式的斯蒂芬斯多夫
+        span.date {{1485255064925 | friendly}}
+      md-divider(ng-if='!$last')
+    md-list-item
+      md-button.md-no-style.md-list-item-inner(ui-sref='article')
+        img.md-avatar(src="http://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png")
+        span 200/300
+        span 精华
+        p 斯蒂芬的说法斯蒂芬森的方式的斯蒂芬斯多夫
+        span 一天前
+      md-divider(ng-if='!$last')
+  pagination(current='1', pages='10', steps='5', changed='onPageChanged()', align="'center center'")

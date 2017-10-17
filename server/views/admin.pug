@@ -1,0 +1,13 @@
+extends ./layouts/admin.pug
+
+block title
+  title 后台管理 - 企业在线学习系统
+
+block content
+  .container(ng-controller='admin', layout='row', flex, ng-cloak)
+    include ./admins/sidenav.pug
+    div(layout='column', flex)
+      include ./admins/topbar.pug
+      md-content.fade.ui-view(flex, ng-animate="'fade'")
+        div(layout='column', layout-align='center center')
+          h3 欢迎来到管理后台！

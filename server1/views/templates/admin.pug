@@ -1,0 +1,8 @@
+md-toolbar.md-toolbar-tools.md-primary(layout='row')
+  div(ng-bind='state.data.title', flex)
+  md-button.md-icon-button(ng-click='signout()')
+    md-tooltip 退出
+    md-icon power_settings_new
+md-content.fade.ui-view(flex, ng-animate="'fade'")
+  div(layout='column', layout-align='center center')
+    h3 欢迎来到管理后台！

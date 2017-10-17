@@ -1,0 +1,7 @@
+div(layout='row', flex)
+  include ../admins/sidenav.pug
+  div(layout='column', flex)
+    include ../admins/topbar.pug
+    md-content.fade.ui-view(flex, ng-animate="'fade'")
+      div(layout='column', layout-align='center center')
+        h3 欢迎来到管理后台！

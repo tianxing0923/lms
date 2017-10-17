@@ -1,0 +1,29 @@
+extends ./layouts/default.pug
+
+block title
+  title 登录 - 企业在线学习系统
+
+block content
+  .signin-wrap(layout='column', flex)
+    md-toolbar.md-whiteframe-2dp(layout='row', layout-align='start center')
+      img.logo(src=require('../../public/images/logo2.png'))
+    div(layout='column', layout-align='center center', flex)
+      md-content(ng-controller='signin')
+        h3.md-headline 登录
+        md-divider
+        form(name='signinForm', ng-submit='authenticate()')
+          md-input-container.md-block
+            label 用户名
+            md-icon.md-default-theme account_box
+            input(name='username', type='text', required, md-no-asterisk, ng-model='signin.username')
+            div(ng-messages='signinForm.username.$error')
+              div(ng-message='required') 请输入用户名
+          md-input-container.md-block
+            label 密码
+            md-icon.md-default-theme lock
+            input(name='password', type='password', required, md-no-asterisk, ng-model='signin.password')
+            div(ng-messages='signinForm.password.$error')
+              div(ng-message='required') 请输入密码
+          //- md-input-container.md-block
+          //-   md-checkbox(name='autosignin', ng-model='signin.autosignin') 自动登录
+          md-button(type='submit', class='md-raised md-primary') 登录

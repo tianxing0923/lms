@@ -1,0 +1,87 @@
+div(ng-controller='course.add', layout='row', ng-cloak='')
+  md-content.md-whiteframe-2dp(layout-padding='', flex='100', flex-gt-sm='70')
+    form(name='displayForm', ng-submit='displayForm.$valid && submit()', novalidate='')
+      div(layout-gt-xs='row')
+        md-input-container.md-block(flex-gt-xs='', ng-if='display.number')
+          label &#x7F16;&#x53F7;
+          |
+          input(ng-model='display.number')
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x91C7;&#x8D2D;&#x5355;&#x53F7;
+          |
+          input(name='orderNumber', ng-model='display.orderNumber', md-maxlength='100')
+          div(ng-messages='displayForm.orderNumber.$error')
+            div(ng-message='md-maxlength') &#x91C7;&#x8D2D;&#x5355;&#x53F7;&#x6700;&#x5927;&#x957F;&#x5EA6;100&#x4E2A;&#x5B57;&#x7B26;
+      div(layout-gt-sm='row')
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x54C1;&#x724C;
+          |
+          input(name='brand', ng-model='display.brand', md-maxlength='100', required='')
+          div(ng-messages='displayForm.brand.$error')
+            div(ng-message='required') &#x8BF7;&#x8F93;&#x5165;&#x54C1;&#x724C;
+            div(ng-message='md-maxlength') &#x54C1;&#x724C;&#x6700;&#x5927;&#x957F;&#x5EA6;100&#x4E2A;&#x5B57;&#x7B26;
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x578B;&#x53F7;
+          |
+          input(name='version', ng-model='display.version', md-maxlength='100', required='')
+          div(ng-messages='displayForm.version.$error')
+            div(ng-message='required') &#x8BF7;&#x8F93;&#x5165;&#x578B;&#x53F7;
+            div(ng-message='md-maxlength') &#x578B;&#x53F7;&#x6700;&#x5927;&#x957F;&#x5EA6;100&#x4E2A;&#x5B57;&#x7B26;
+      div(layout-gt-sm='row')
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x5E8F;&#x5217;&#x53F7;
+          |
+          input(name='serialNumber', ng-model='display.serialNumber', md-maxlength='100')
+          div(ng-messages='displayForm.serialNumber.$error')
+            div(ng-message='md-maxlength') &#x5E8F;&#x5217;&#x53F7;&#x6700;&#x5927;&#x957F;&#x5EA6;100&#x4E2A;&#x5B57;&#x7B26;
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x5C4F;&#x5E55;&#x5C3A;&#x5BF8;
+          md-select(name='displaySize', ng-model='display.displaySize', required='')
+            md-option(ng-repeat='item in configData.screenSizes', value='{{item.value}}') {{item.value}}
+          div(ng-messages='displayForm.displaySize.$error')
+            div(ng-message='required') &#x8BF7;&#x9009;&#x62E9;&#x5C4F;&#x5E55;&#x5C3A;&#x5BF8;
+      div(layout-gt-sm='row')
+        md-input-container
+          label &#x8D2D;&#x4E70;&#x65E5;&#x671F;
+          md-datepicker(ng-model='display.buyDate', md-open-on-focus='')
+        md-input-container
+          label &#x8D28;&#x4FDD;&#x65E5;&#x671F;
+          md-datepicker(ng-model='display.guaranteeDate', md-open-on-focus='')
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x8D2D;&#x4E70;&#x4EF7;&#x683C;
+          |
+          input(type='number', name='price', min='0', ng-model='display.price', ng-pattern='/^(\d+(.\d)?)?$/')
+          div(ng-messages='displayForm.price.$error')
+            div(ng-message='min') &#x8D2D;&#x4E70;&#x4EF7;&#x683C;&#x5FC5;&#x987B;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;0
+            div(ng-message='pattern') &#x8BF7;&#x8F93;&#x5165;&#x6709;&#x6548;&#x7684;&#x4EF7;&#x683C;&#xFF0C;&#x4F8B;&#x5982;100&#x6216;100.00
+        md-input-container.md-block(flex-gt-xs='', ng-if='isAdd')
+          label &#x6570;&#x91CF;
+          |
+          input(type='number', name='buyNumber', min='1', ng-model='display.buyNumber', ng-pattern='/^\d+$/', required='')
+          div(ng-messages='displayForm.buyNumber.$error')
+            div(ng-message='required') &#x8BF7;&#x8F93;&#x5165;&#x6570;&#x91CF;
+            div(ng-message='min') &#x6570;&#x91CF;&#x5FC5;&#x987B;&#x5927;&#x4E8E;0
+            div(ng-message='pattern') &#x8BF7;&#x8F93;&#x5165;&#x6B63;&#x786E;&#x7684;&#x683C;&#x5F0F;
+      div(layout-gt-sm='row')
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x4F9B;&#x5E94;&#x5546;
+          |
+          input(name='supplier', ng-model='display.supplier', md-maxlength='100')
+          div(ng-messages='displayForm.supplier.$error')
+            div(ng-message='md-maxlength') &#x4F9B;&#x5E94;&#x5546;&#x6700;&#x5927;&#x957F;&#x5EA6;100&#x4E2A;&#x5B57;&#x7B26;
+        md-input-container.md-block(flex='30', flex-gt-xs='')
+          label &#x72B6;&#x6001;
+          md-select(name='status', ng-model='display.status', ng-model-options="{trackBy: '$value'}", convert-to-number='', required='')
+            md-option(ng-repeat='(key, value) in configData.assetsStatusEnums', value='{{key}}') {{value}}
+          div(ng-messages='displayForm.status.$error')
+            div(ng-message='required') &#x8BF7;&#x9009;&#x62E9;&#x72B6;&#x6001;
+      div(layout-gt-xs='row')
+        md-input-container.md-block(flex-gt-xs='')
+          label &#x5907;&#x6CE8;
+          textarea(rows='3', ng-model='display.remark', md-maxlength='800')
+          div(ng-messages='displayForm.remark.$error')
+            div(ng-message='md-maxlength') &#x5907;&#x6CE8;&#x6700;&#x5927;&#x957F;&#x5EA6;800&#x4E2A;&#x5B57;&#x7B26;
+      md-progress-linear(md-mode='indeterminate', ng-show='loading')
+      div(layout='row', layout-align='center center')
+        md-button.md-raised.md-primary(type='submit') &#x786E;&#x5B9A;
+        md-button.md-raised(type='button', ng-click='reset()') &#x91CD;&#x7F6E;

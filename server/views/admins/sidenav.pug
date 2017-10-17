@@ -1,0 +1,43 @@
+md-sidenav.md-sidenav-left.md-whiteframe-2dp(md-is-locked-open='$mdMedia("gt-xs")', md-component-id='left', layout='column')
+  md-toolbar.nav-header.md-whiteframe-2dp(layout='row', layout-align='center center')
+    img.logo(src='/assets/images/logo.png')
+  md-content.nav-body(flex='')
+    ul.nav-menu
+      md-button.nav-item(ng-class='{active: true}', ui-sref='admin.course')
+        md-icon.md-18 desktop_windows
+        span &#x56FA;&#x5B9A;&#x8D44;&#x4EA7;
+      md-button.nav-item(ng-class='{active: false}', ui-sref='admin.category')
+        md-icon.md-18 library_books
+        span &#x8D44;&#x4EA7;&#x5165;&#x5E93;
+
+//- md-sidenav.md-sidenav-left(md-is-locked-open='true', md-whiteframe='4')
+//-   md-toolbar(layout='row', layout-align="center center")
+//-     div(flex-offset='5', flex='40')
+//-       img.logo(src='/assets/images/logo.png', ng-click='home()')
+//-     div(flex)
+//-     md-button.md-icon-button(ng-click='home()', layout='column')
+//-       md-tooltip 返回首页
+//-       md-icon arrow_back
+//-   md-content
+//-     <md-menu-content>
+//-       <md-menu-item>
+//-         <md-button ui-sref='admin.course' name='admin.course' ui-sref-active="md-primary">
+//-           <md-icon>library_books</md-icon> 课程管理
+//-         </md-button>
+//-       </md-menu-item>
+//-       <md-menu-item>
+//-         <md-button ui-sref='admin.category' name='admin.category' ui-sref-active="md-primary">
+//-           <md-icon>settings</md-icon> 分类管理
+//-         </md-button>
+//-       </md-menu-item>
+//-       <md-menu-item>
+//-         <md-button ui-sref='admin.user' name='admin.user' ui-sref-active="md-primary">
+//-           <md-icon>supervisor_account</md-icon> 用户管理
+//-         </md-button>
+//-       </md-menu-item>
+//-       <md-menu-item>
+//-         <md-button ui-sref='admin.role' name='admin.role' ui-sref-active="md-primary">
+//-           <md-icon>verified_user</md-icon> 角色管理
+//-         </md-button>
+//-       </md-menu-item>
+//-     </md-menu-content>

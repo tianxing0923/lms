@@ -1,0 +1,34 @@
+div(ng-controller='admin.course', ng-cloak)
+  md-content.md-padding(layout='row')
+    div(flex)
+    md-button.md-raised.md-primary(ng-click='getList()') 刷新
+    md-button.md-raised(md-colors='{background: "green"}', ui-sref='admin.course.add') 新增
+    //- md-button.md-raised(md-colors='{background: "green"}', ng-click='showAddDialog($event)') 新增
+  md-divider
+  md-table-container
+    table(md-table)
+      thead(md-head)
+        tr(md-row)
+          th(md-column) 标题
+          th(md-column) 类别
+          th(md-column) 讲师
+          th(md-column) 阅读量
+          th(md-column) 评论量
+          th(md-column) 创建人
+          th(md-column) 创建时间
+          th(md-column) 操作
+      tbody(md-body)
+        tr(md-row, ng-repeat='item in list')
+          td(md-cell) {{item.number}}
+          td(md-cell) {{item.brand}}
+          td(md-cell) {{item.version}}
+          td(md-cell) {{item.displaySize}}
+          td(md-cell) {{item.userName}}
+          td(md-cell) {{item.userDepartment}}
+          td(md-cell) {{item.status}}
+          td(md-cell)
+            md-button.md-icon-button(ng-click='showEditDialog($event, item)')
+              md-icon create
+        tr(md-row, ng-show='list.length == 0')
+          td.tac(md-cell, colspan='8') 无数据
+  md-table-pagination(md-label='{page: "页数", rowsPerPage: "每页", of: "总数"}', md-limit-options='[10, 15, 20, 25, 50]', md-limit='searcher.size', md-page='searcher.page', md-total='{{searcher.total}}', md-on-paginate='getList', md-page-select)

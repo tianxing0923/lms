@@ -1,0 +1,54 @@
+// 左侧导航栏
+.md-sidenav-left {
+  width: 240px;
+  background-color: @sidenav-bgcolor;
+  .nav-header {
+    background-color: rgba(255, 255, 255, 0.05);
+    .logo {
+      margin: 0 20px;
+      height: 32px;
+    }
+  }
+  .nav-body {
+    background-color: @sidenav-bgcolor;
+  }
+  .nav-menu {
+    color: rgba(255,255,255,.7);
+    .nav-item {
+      &.active {
+        background-color: rgba(0,0,0,.3);
+        .arrow {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .md-button {
+      margin: 0;
+      padding: 5px 16px;
+      width: 100%;
+      text-align: left;
+    }
+    .material-icons {
+      margin-top: -2px;
+      margin-right: 16px;
+      color: rgba(255,255,255,.7);
+    }
+    .arrow {
+      position: absolute;
+      top: 15px;
+      right: 0;
+      transition-duration: .3s;
+    }
+  }
+  .subnav-menu {
+    overflow: hidden;
+    transition: all ease-out .75s;
+    .md-button {
+      padding-left: 55px;
+      &.active {
+        background-color: @sidenav-bgcolor-active;
+        color: #fff;
+      }
+    }
+  }
+}

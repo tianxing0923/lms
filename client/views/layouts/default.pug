@@ -1,0 +1,13 @@
+doctype html
+html(ng-app='lms', lang='zh-cn')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=Edge,chrome=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='author', content='eric tian')
+    base(href='/')
+    block title
+      title 企业在线学习系统
+  body(ng-cloak)
+    md-progress-linear.loading(md-mode='indeterminate', ng-show='loading')
+    block content

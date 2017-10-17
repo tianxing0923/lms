@@ -1,8 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const router = require('koa-router')();
 
-router.get('/article/list', function(req, res, next) {
-  res.render('templates/article/list');
+router.get('/:filename', async (ctx, next) => {
+  await ctx.render('templates/' + ctx.params.filename);
+});
+
+router.get('/:folder/:filename', async (ctx, next) => {
+  await ctx.render('templates/' + ctx.params.folder + '/' + ctx.params.filename);
 });
 
 module.exports = router;

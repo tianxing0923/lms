@@ -6,62 +6,88 @@
 
 const mongoose = require('mongoose');
 const { wrap: async } = require('co');
-const { respond } = require('../utils');
+// const { respond } = require('../utils');
+const userModel = require('../../models/user');
+const ExtendError = require('../../utils/extend_error');
 const User = mongoose.model('User');
 
 /**
  * Load
  */
 
-exports.load = async(function* (req, res, next, _id) {
-  const criteria = { _id };
+exports.load = async (_id) => {
   try {
-    req.profile = yield User.load({ criteria });
-    if (!req.profile) return next(new Error('User not found'));
-  } catch (err) {
-    return next(err);
+    var userInfo = await User.findById(_id);
+    if (!userInfo) {
+      throw new ExtendError(404, '用户不存在');
+    }
+  } catch (e) {
+    throw new ExtendError(500, e);
   }
-  next();
-});
+};
 
 /**
  * Create user
  */
-
-exports.create = async(function* (req, res) {
-  const user = new User(req.body);
-  user.provider = 'local';
+exports.create = async (data) => {
+  const user = new User(data);
   try {
-    yield user.save();
-    req.logIn(user, err => {
-      if (err) req.flash('info', 'Sorry! We are not able to log you in!');
-      return res.redirect('/');
+    await user.save();
+  } catch (e) {
+    const errors = Object.keys(e.errors)
+      .map(field => e.errors[field].message);
+    throw new ExtendError(500, errors);
+  }
+};
+
+/**
+ * Update user
+ */
+exports.update = async (_id, data) => {
+  try {
+    User.findById(_id, function (err, model) {
+      Object.assign(model, data);
+      model.save();
     });
   } catch (err) {
     const errors = Object.keys(err.errors)
       .map(field => err.errors[field].message);
-
-    res.render('users/signup', {
-      title: 'Sign up',
-      errors,
-      user
-    });
+    throw new ExtendError(500, errors);
   }
-});
+};
+
+
+/**
+ * Delete user
+ */
+exports.delete = async (_id) => {
+  try {
+    User.findByIdAndRemove(_id, function (err, model) {
+      Object.assign(model, data);
+      model.save();
+    });
+  } catch (err) {
+    const errors = Object.keys(err.errors)
+      .map(field => err.errors[field].message);
+    throw new ExtendError(500, errors);
+  }
+};
 
 /**
  *  Show profile
  */
 
-exports.show = function (req, res) {
-  const user = req.profile;
-  respond(res, 'users/show', {
-    title: user.name,
-    user: user
-  });
-};
+// exports.show = function (req, res) {
+//   const user = req.profile;
+//   respond(res, 'users/show', {
+//     title: user.name,
+//     user: user
+//   });
+// };
 
-exports.signin = function () {};
+exports.signin = function () {
+
+};
 
 /**
  * Auth callback
@@ -83,12 +109,12 @@ exports.login = function (req, res) {
  * Show sign up form
  */
 
-exports.signup = function (req, res) {
-  res.render('users/signup', {
-    title: 'Sign up',
-    user: new User()
-  });
-};
+// exports.signup = function (req, res) {
+//   res.render('users/signup', {
+//     title: 'Sign up',
+//     user: new User()
+//   });
+// };
 
 /**
  * Logout

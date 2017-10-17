@@ -1,10 +1,10 @@
 extends ./layouts/default.pug
 
 block content
-  .container(layout='column', layout-align="space-between none")
-    include ./partials/navbar.pug
+  .container(layout='column', layout-align='space-between none')
+    include ./clients/navbar.pug
     main(layout='row', layout-padding)
       div.content(flex='80')
         .fade.ui-view(ng-animate="'fade'")
-      include ./partials/sidebar.pug
-    include ./partials/footer.pug
+      include ./clients/sidebar.pug
+    include ./clients/footer.pug

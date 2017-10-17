@@ -1,0 +1,15 @@
+div.navbar(ng-controller='navbar')
+  md-content
+    md-nav-bar(md-selected-nav-item='stateName', nav-bar-aria-label='navigation links')
+      img.logo(src=require('../../../public/images/logo.png'))
+      md-nav-item(md-nav-sref='client.home', name='client.home') 首页
+      md-nav-item(md-nav-sref='client.essence', name='client.essence') 精华
+      md-nav-item(md-nav-sref='client.share', name='client.share') 分享
+      md-nav-item(md-nav-sref='client.qestion', name='client.qestion') 问答
+      md-nav-item(md-nav-sref='client.course', name='client.course') 课程
+      div(flex)
+      md-nav-item(md-nav-sref='admin.course', name='admin.course') 后台管理
+      div(layout='column', layout-align='center center')
+        md-button.md-icon-button(md-colors='{color: "red"}', ng-click='signout()')
+          md-tooltip 退出
+          md-icon(md-colors='{color: "red"}') power_settings_new

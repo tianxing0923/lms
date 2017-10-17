@@ -1,0 +1,40 @@
+doctype html
+html(lang='zh-cn')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=Edge,chrome=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='author', content='eric tian')
+    base(href='/')
+    block title
+      title 企业在线学习系统
+    link(rel='icon', href='/favicon.ico')
+    link(rel='stylesheet', href='/node_modules/angular-material/angular-material.min.css')
+    link(rel='stylesheet', href='/node_modules/material-design-icons/iconfont/material-icons.css')
+    link(rel='stylesheet', href='/public/assets/css/style.css')
+  body(ng-app='lms', ng-cloak)
+    md-progress-linear.loading(md-mode='indeterminate', ng-show='loading')
+    block content
+    script(src='/node_modules/angular/angular.min.js')
+    script(src='/node_modules/angular-animate/angular-animate.min.js')
+    script(src='/node_modules/angular-aria/angular-aria.min.js')
+    script(src='/node_modules/angular-messages/angular-messages.min.js')
+    script(src='/node_modules/angular-material/angular-material.min.js')
+    script(src='/node_modules/angular-ui-router/release/angular-ui-router.min.js')
+    //- script(src='/components/angularjs/i18n/angular-locale_zh-cn.js')
+    //- inject:js
+    script(src="/public/services/services.js")
+    script(src="/public/filters/filters.js")
+    script(src="/public/filters/friendly.js")
+    script(src="/public/directives/directives.js")
+    script(src="/public/directives/pagination.js")
+    script(src="/public/app.js")
+    script(src="/public/config/icon.js")
+    script(src="/public/config/routes.js")
+    script(src="/public/config/theme.js")
+    script(src="/public/controllers/navbar.js")
+    script(src="/public/controllers/sidebar.js")
+    script(src="/public/controllers/admin/index.js")
+    script(src="/public/controllers/home/index.js")
+    script(src="/public/controllers/sign/index.js")
+    //- endinject

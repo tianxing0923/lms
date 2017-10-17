@@ -1,0 +1,7 @@
+div(layout='column', layout-align='start none', flex)
+  include ../clients/navbar.pug
+  main(layout='row', layout-padding, flex)
+    div.container(flex='80')
+      .fade.ui-view(ng-animate="'fade'")
+    include ../clients/sidebar.pug
+  include ../clients/footer.pug

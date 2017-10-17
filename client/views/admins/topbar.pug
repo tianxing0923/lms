@@ -1,0 +1,15 @@
+md-toolbar.topbar.md-menu-toolbar.md-whiteframe-2dp(ng-controller='topbar', layout='row', layout-align='start center')
+  md-button.md-icon-button.hide-gt-xs(ng-click='toggle()')
+    md-tooltip 导航
+    md-icon menu
+  span(ng-bind='titleName')
+  div(flex)
+  div(layout='row', layout-align='start center')
+    img.avatar(src='https://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png')
+    span.username &#x7530;&#x661F;
+  md-button.md-icon-button(ui-sref='client.home')
+    md-tooltip 返回前台
+    md-icon keyboard_backspace
+  md-button.md-icon-button(md-colors='{color: "red"}', ng-click='signout()')
+    md-tooltip 退出
+    md-icon(md-colors='{color: "red"}') power_settings_new
