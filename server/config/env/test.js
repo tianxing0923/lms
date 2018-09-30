@@ -5,7 +5,8 @@
  */
 
 module.exports = {
-  db: 'mongodb://localhost/noobjs_test',
+  db: 'mongodb://localhost/lms',
+  url: 'http://api.lms.com',
   facebook: {
     clientID: process.env.FACEBOOK_CLIENTID,
     clientSecret: process.env.FACEBOOK_SECRET,

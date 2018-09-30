@@ -5,38 +5,26 @@
  */
 
 const mongoose = require('mongoose');
-// const notify = require('../mailer');
-
-// const Imager = require('imager');
-// const config = require('../../config');
-// const imagerConfig = require(config.root + '/config/imager.js');
-
 const Schema = mongoose.Schema;
-
-const getTags = tags => tags.join(',');
-const setTags = tags => tags.split(',');
 
 /**
  * Article Schema
  */
 
 const ArticleSchema = new Schema({
-  title: { type: String, default: '', trim: true },
-  category: { type: Schema.ObjectId, ref: 'Category' },
-  tags: { type: [], get: getTags, set: setTags },
-  content: { type: String, default: '', trim: true },
-  user: { type: Schema.ObjectId, ref: 'User' },
+  title: { type: String, default: '', trim: true, required: [true, '标题不能为空'] },
+  type: { type: String, default: '', trim: true, required: [true, '类型不能为空'] },
+  categories: [{ type: Schema.Types.ObjectId, ref: 'Category', required: [true, '分类不能为空'] }],
+  content: { type: String, default: '', trim: true, required: [true, '内容不能为空'] },
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: [true, '作者不能为空'] },
   readCount: { type: Number, default: 0 },
   commentCount: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now }
+  essence: { type: Date, default: null },
+  top: { type: Date, default: null },
+  status: { type: Number, default: 1 },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
 });
-
-/**
- * Validations
- */
-
-ArticleSchema.path('title').required(true, 'Article title cannot be blank');
-ArticleSchema.path('content').required(true, 'Article content cannot be blank');
 
 /**
  * Pre-remove hook

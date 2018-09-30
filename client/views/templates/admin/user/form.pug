@@ -1,0 +1,23 @@
+md-input-container.md-block
+  label 用户名
+  input(name='username', ng-model='form.username', required)
+  div(ng-messages='userForm.username.$error')
+    div(ng-message='required') 请输入用户名
+md-input-container.md-block
+  label 密码
+  input(name='password', type='password', ng-model='form.password', placeholder='默认密码123456')
+md-input-container.md-block
+  label 姓名
+  input(name='name', ng-model='form.name', required)
+  div(ng-messages='userForm.name.$error')
+    div(ng-message='required') 请输入姓名
+md-input-container.md-block
+  label 部门
+  input(name='department', ng-model='form.department', required)
+  div(ng-messages='userForm.department.$error')
+    div(ng-message='required') 请输入部门
+md-input-container.md-block
+  label 职位
+  input(name='position', ng-model='form.position', required)
+  div(ng-messages='userForm.position.$error')
+    div(ng-message='required') 请输入职位

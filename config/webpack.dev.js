@@ -31,7 +31,7 @@ module.exports = function (env) {
         use: [{
           loader: 'url-loader',
           options: {
-            limit: 8192,
+            limit: 3072,
             name: 'images/[name].[ext]'
           }
         }, {
@@ -63,6 +63,7 @@ module.exports = function (env) {
       contentBase: path.join(__dirname, '../dist'),
       compress: true,
       proxy: {
+        '/sign/': 'http://localhost:5000',
         '/api': 'http://localhost:5000'
       },
       historyApiFallback: {

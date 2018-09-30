@@ -5,7 +5,6 @@
  */
 const mongoose = require('mongoose');
 const crypto = require('crypto');
-
 const Schema = mongoose.Schema;
 
 /**
@@ -19,7 +18,8 @@ const UserSchema = new Schema({
   avatar: { type: String, default: '' },
   department: { type: String, default: '' },
   position: { type: String, default: '' },
-  role: { type: String, default: '' },
+  role: { type: String, default: 'user' },
+  status: { type: Number, default: 1 },
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -40,31 +40,30 @@ const validatePresenceOf = value => value && value.length;
 //   });
 
 /**
- * Validations
+ * 字段校验
  */
-// the below 5 validations only apply if you are signing up traditionally
 UserSchema.path('username').validate(function (username) {
   return username.length;
-}, 'Username cannot be blank');
+}, '用户名不能为空');
 
 UserSchema.path('password').validate(function (password) {
   return password.length;
-}, 'Password cannot be blank');
+}, '密码不能为空');
 UserSchema.path('name').validate(function (name) {
   return name.length;
-}, 'Name cannot be blank');
+}, '姓名不能为空');
 
 UserSchema.path('department').validate(function (department) {
   return department.length;
-}, 'Department cannot be blank');
+}, '部门不能为空');
 
 UserSchema.path('position').validate(function (position) {
   return position.length;
-}, 'Position cannot be blank');
+}, '职位不能为空');
 
 UserSchema.path('role').validate(function (role) {
   return role.length;
-}, 'Role cannot be blank');
+}, '角色不能为空');
 
 
 /**
@@ -127,24 +126,24 @@ UserSchema.methods = {
   }
 };
 
-/**
- * Statics
- */
-UserSchema.statics = {
+// /**
+//  * Statics
+//  */
+// UserSchema.statics = {
 
-  /**
-   * Load
-   *
-   * @param {Object} options
-   * @param {Function} cb
-   * @api private
-   */
-  load: function (options, cb) {
-    options.select = options.select || 'name username';
-    return this.findOne(options.criteria)
-      .select(options.select)
-      .exec(cb);
-  }
-};
+//   /**
+//    * Load
+//    *
+//    * @param {Object} options
+//    * @param {Function} cb
+//    * @api private
+//    */
+//   load: function (options, cb) {
+//     options.select = options.select || 'name username';
+//     return this.findOne(options.criteria)
+//       .select(options.select)
+//       .exec(cb);
+//   }
+// };
 
 mongoose.model('User', UserSchema);

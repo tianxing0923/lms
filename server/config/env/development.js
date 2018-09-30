@@ -6,6 +6,7 @@
 
 module.exports = {
   db: 'mongodb://localhost/lms',
+  url: 'http://localhost:5000',
   facebook: {
     clientID: process.env.FACEBOOK_CLIENTID,
     clientSecret: process.env.FACEBOOK_SECRET,

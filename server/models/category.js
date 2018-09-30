@@ -4,8 +4,6 @@
  * Module dependencies.
  */
 const mongoose = require('mongoose');
-const crypto = require('crypto');
-
 const Schema = mongoose.Schema;
 
 /**
@@ -13,8 +11,8 @@ const Schema = mongoose.Schema;
  */
 const CategorySchema = new Schema({
   name: { type: String, default: '' },
-  type: { type: String, default: '' },
   description: { type: String, default: '' },
+  status: { type: Number, default: 1 },
   createdAt: { type: Date, default: Date.now }
 });
 

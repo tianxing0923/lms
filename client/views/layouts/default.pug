@@ -7,7 +7,7 @@ html(ng-app='lms', lang='zh-cn')
     meta(name='author', content='eric tian')
     base(href='/')
     block title
-      title 企业在线学习系统
-  body(ng-cloak)
+      title(ng-bind="title + (title ? ' - ' : '') + '企业在线学习系统'") 企业在线学习系统
+  body(ng-controller='main', ng-cloak)
     md-progress-linear.loading(md-mode='indeterminate', ng-show='loading')
     block content

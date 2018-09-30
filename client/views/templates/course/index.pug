@@ -1,0 +1,20 @@
+div(ng-controller='client.course', ng-cloak)
+  md-button(ng-repeat='item in categories', ng-class="{'md-primary md-raised': searcher.category == item._id}", ng-bind='item.name', ng-click='changeCategory($event, item)', aria-label='{{item.name}}')
+  md-card.course-list(ng-repeat='item in list')
+    md-card-title(layout='column', layout-align='none')
+      .title
+        .lecturer
+          span {{item.lecturer}}
+          span {{item.createdAt | friendly}}
+        h3.md-title
+          span 【
+            span(ng-repeat='el in item.categories', ng-bind="el.name + ($last ? '' : '、')")
+            | 】
+          a(ui-sref='course.detail({id: item._id})', target='_blank') {{item.title}}
+      md-card-content
+        p {{item.summary}}
+      md-card-actions(layout='row', layout-align='end center')
+        span.count {{item.commentCount}} / {{item.readCount}}
+  md-card(ng-if='list.length == 0 && !loading')
+    md-card-content.tac 暂无数据
+  md-table-pagination(md-label='{page: "页数", rowsPerPage: "每页", of: "总数"}', md-limit-options='[10, 20, 30, 50, 100]', md-limit='searcher.size', md-page='searcher.page', md-total='{{searcher.total}}', md-on-paginate='getList', md-page-select)

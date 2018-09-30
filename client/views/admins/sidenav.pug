@@ -1,17 +1,17 @@
 md-sidenav.md-sidenav-left.md-whiteframe-2dp(md-is-locked-open='$mdMedia("gt-xs")', md-component-id='left', layout='column')
   md-toolbar.nav-header.md-whiteframe-2dp(layout='row', layout-align='center center')
-    img.logo(src=require('../../../public/images/logo2.png'))
+    img.logo(src=require('../../assets/images/logo2.png'))
   md-content.nav-body(flex='')
     ul.nav-menu
-      md-button.nav-item(ng-class='{active: stateName == "admin.course.list"}', ui-sref='admin.course.list')
+      md-button.nav-item(ng-class='{active: stateName.indexOf("admin.article") != -1}', ui-sref='admin.article.list')
+        md-icon.md-18 art_track
+        span 文章管理
+      md-button.nav-item(ng-class='{active: stateName.indexOf("admin.course") != -1}', ui-sref='admin.course.list')
         md-icon.md-18 library_books
         span 课程管理
-      md-button.nav-item(ng-class='{active: stateName == "admin.category"}', ui-sref='admin.category')
+      md-button.nav-item(ng-class='{active: stateName.indexOf("admin.category") != -1}', ui-sref='admin.category.list')
         md-icon.md-18 local_offer
         span 分类管理
-      md-button.nav-item(ng-class='{active: stateName == "admin.user"}', ui-sref='admin.user')
+      md-button.nav-item(ng-class='{active: stateName.indexOf("admin.user") != -1}', ui-sref='admin.user.list')
         md-icon.md-18 supervisor_account
         span 用户管理
-      md-button.nav-item(ng-class='{active: stateName == "admin.role"}', ui-sref='admin.role')
-        md-icon.md-18 accessibility
-        span 角色管理

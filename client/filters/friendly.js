@@ -1,11 +1,11 @@
 // 时间友好显示
 module.exports = function (filters) {
   angular.module(filters).filter('friendly', function () {
-    return function (time) {
+    return function (str) {
+      var time = new Date(str).getTime();
       var now = new Date().getTime();
       var value = '';
-      var difference = parseInt(now - time);
-
+      var difference = parseInt(now - time) / 1000;
       if (difference < 60) {
         // 1分钟内
         return '刚刚';

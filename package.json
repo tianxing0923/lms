@@ -15,8 +15,8 @@
     "node": ">= 7.6.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon server/bin/www",
-    "devserver": "webpack-dev-server --open",
+    "server": "cross-env NODE_ENV=development nodemon --inspect server/bin/www",
+    "start": "webpack-dev-server --open",
     "build": "npm run build:dev",
     "build:dev": "webpack --env=dev --progress --watch --colors",
     "build:test": "webpack --env=test --progress --watch --colors",
@@ -46,17 +46,22 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.2",
     "angular": "^1.6.5",
     "angular-animate": "^1.6.5",
     "angular-aria": "^1.6.5",
-    "angular-froala": "^2.6.1",
+    "angular-froala": "^2.8.4",
     "angular-material": "^1.1.4",
     "angular-material-data-table": "^0.10.10",
     "angular-messages": "^1.6.5",
+    "angular-sanitize": "^1.7.3",
     "angular-ui-router": "^0.4.1",
     "connect-flash": "^0.1.1",
-    "connect-mongo": "^1.3.2",
+    "connect-mongo": "^2.0.1",
     "cross-env": "^5.0.0",
+    "font-awesome": "^4.7.0",
+    "froala-editor": "^2.8.4",
+    "jquery": "^3.3.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^3.2.0",
     "koa-etag": "^3.0.0",
@@ -69,8 +74,9 @@
     "koa-views": "^6.0.2",
     "material-design-icons": "^3.0.1",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.3",
+    "mongoose": "^5.2.10",
     "nconf": "^0.8.4",
-    "pug": "^2.0.0-rc.2"
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.3"
   }
 }

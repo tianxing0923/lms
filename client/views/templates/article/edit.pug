@@ -1,0 +1,6 @@
+form(ng-controller='article.edit', name='articleForm', ng-submit='articleForm.$valid && submit()', novalidate, ng-cloak)
+  div(ng-include="'/templates/article/form.html'")
+  div(layout='row', layout-align='end center')
+    span(md-colors='{color: "red"}', ng-if="articleForm.$submitted && articleForm.$invalid") 表单错误，请检查！
+    md-button.md-raised(type='button', ng-click='cancel()') 取消
+    md-button.md-raised.md-primary(type='submit', ng-disabled='loading') 保存

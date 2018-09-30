@@ -1,0 +1,13 @@
+md-dialog
+  form.form-user(name='userForm', ng-submit='userForm.$valid && submit()' novalidate)
+    md-toolbar
+      .md-toolbar-tools
+        h2 新增用户
+        span(flex='')
+        md-button.md-icon-button(ng-click='close()')
+          md-icon close
+    md-dialog-content.md-dialog-content(ng-include="'/templates/admin/user/form.html'")
+    md-dialog-actions(layout='row', layout-align='end center')
+      span(md-colors='{color: "red"}', ng-if='userForm.$submitted && userForm.$invalid') 表单错误，请检查！
+      md-button.md-raised(ng-click='close()') 取消
+      md-button.md-raised.md-primary(type='submit', ng-disabled='loading') 提交

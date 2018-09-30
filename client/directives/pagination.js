@@ -7,11 +7,12 @@ module.exports = function (directives) {
     return {
       restrict: 'EA',
       scope: {
-        pages: '=',
+        current: '=',
+        size: '=',
+        total: '=',
         align: '=',
         changed: '&',
-        steps: '=',
-        current: '='
+        steps: '='
       },
       controller: PaginationController,
       template: [
@@ -32,6 +33,7 @@ module.exports = function (directives) {
     // $scope.first = '<md-icon>navigate_before</md-icon>';
     // $scope.last = '<md-icon>navigate_next</md-icon>';
     $scope.index = 0;
+    $scope.pages = 0;
     // $scope.steps = $scope.steps;
 
     $scope.goto = function (index) {
@@ -60,6 +62,7 @@ module.exports = function (directives) {
     };
 
     $scope.$watch('current', function (value) {
+      debugger
       $scope.index = parseInt((value - 1) / $scope.steps) * $scope.steps;
       $scope.changed();
     });
@@ -76,6 +79,8 @@ module.exports = function (directives) {
         }
         return result;
       })();
+
+      $scope.pages = Math.ceil($scope.total / $scope.size);
 
       $scope.page = (function () {
         var result = [];

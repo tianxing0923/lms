@@ -1,14 +1,18 @@
 // 登录
 module.exports = function (lmsApp) {
-  lmsApp.controller('signin', ['$scope', function ($scope) {
-    $scope.signin = {
+  lmsApp.controller('signin', ['$scope', 'usersApi', function ($scope, usersApi) {
+
+    // 表单
+    $scope.form = {
       username: '',
-      password: '',
-      autosignin: true
+      password: ''
     };
 
-    $scope.authenticate = function () {
-
+    // 登录
+    $scope.signin = function () {
+      usersApi.signin($scope.form).then(function (result) {
+        location.href = '/';
+      });
     };
   }]);
 };

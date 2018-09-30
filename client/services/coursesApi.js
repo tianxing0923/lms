@@ -1,19 +1,19 @@
 // 课程api
 module.exports = function (services) {
-  angular.module(services).service('coursesApi', ['$http', '$q', function ($http, $q) {
+  angular.module(services).service('coursesApi', ['$http', '$q', 'utility', function ($http, $q, utility) {
 
     /**
      * 获取列表数据
      * @param  {object} params 搜索参数
      * @return {object}        列表数据
      */
-    this.getList = function (params) {
+    this.list = function (params) {
       var d = $q.defer();
       $http({
         url: '/api/courses',
         params: params,
       }).then(function (result) {
-        d.resolve(result);
+        utility.resultHandler(d, result);
       });
       return d.promise;
     };
@@ -23,13 +23,12 @@ module.exports = function (services) {
      * @param  {string} id 课程ID
      * @return {object}    课程详情
      */
-    this.getData = function (id) {
+    this.detail = function (id) {
       var d = $q.defer();
       $http({
-        method: 'GET',
         url: '/api/courses/' + id
       }).then(function (result) {
-        d.resolve(result);
+        utility.resultHandler(d, result);
       });
       return d.promise;
     };
@@ -39,14 +38,14 @@ module.exports = function (services) {
      * @param  {object} data 数据
      * @return {string}      操作提示
      */
-    this.addData = function (data) {
+    this.add = function (data) {
       var d = $q.defer();
       $http({
         method: 'POST',
         url: '/api/courses',
         data: data
       }).then(function (result) {
-        d.resolve(result);
+        utility.resultHandler(d, result);
       });
       return d.promise;
     };
@@ -56,14 +55,30 @@ module.exports = function (services) {
      * @param  {object} data 数据
      * @return {string}      操作提示
      */
-    this.editData = function (data) {
+    this.edit = function (data) {
       var d = $q.defer();
       $http({
         method: 'PUT',
-        url: '/api/courses/' + data.id,
+        url: '/api/courses/' + data._id,
         data: data
       }).then(function (result) {
-        d.resolve(result);
+        utility.resultHandler(d, result);
+      });
+      return d.promise;
+    };
+
+    /**
+     * 删除数据
+     * @param  {string} id 课程ID
+     * @return {string}    操作提示
+     */
+    this.delete = function (id) {
+      var d = $q.defer();
+      $http({
+        method: 'DELETE',
+        url: '/api/courses/' + id
+      }).then(function (result) {
+        utility.resultHandler(d, result);
       });
       return d.promise;
     };

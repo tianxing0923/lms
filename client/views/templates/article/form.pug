@@ -1,0 +1,23 @@
+div(layout='row')
+  md-input-container(flex='15')
+    label 类型
+    md-select(name='type', ng-model='form.type', required)
+      md-option(value='share') 技术分享
+      md-option(value='question') 问题求助
+    div(ng-messages='articleForm.type.$error')
+      div(ng-message='required') 请选择类型
+  md-input-container(flex)
+    label 标题
+    input(name='title', ng-model='form.title', required)
+    div(ng-messages='articleForm.title.$error')
+      div(ng-message='required') 请输入标题
+md-input-container.md-block
+  div(layout='row')
+    md-checkbox(ng-repeat='item in categories', ng-value='item._id', ng-checked='form.categories.indexOf(item._id) != -1', ng-click='selected(item)') {{item.name}}
+    input.hide(type='number', name='categories', ng-model='form.categories.length', min='1', aria-label='分类')
+  div(ng-messages='articleForm.categories.$error')
+    div(ng-message='min') 请选择分类
+md-input-container.md-block
+  textarea(name='content', froala='editerConfig', ng-model='form.content', required, aria-label='内容')
+  div(ng-messages='articleForm.content.$error')
+    div(ng-message='required') 请输入内容

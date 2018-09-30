@@ -1,25 +1,14 @@
-
-module.exports = {
-  respond,
-  respondOrRedirect
+var utils = {
+  // 获取随机文件名
+  getFilename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, (err, raw) => {
+      var filename = err ? undefined : raw.toString('hex');
+      if (filename) {
+        let suffix = file.originalname.substring(file.originalname.lastIndexOf('.')).toLowerCase();
+        cb(null, filename + suffix);
+      }
+    });
+  }
 };
 
-function respond (res, tpl, obj, status) {
-  res.format({
-    html: () => res.render(tpl, obj),
-    json: () => {
-      if (status) return res.status(status).json(obj);
-      res.json(obj);
-    }
-  });
-}
-
-function respondOrRedirect ({ req, res }, url = '/', obj = {}, flash) {
-  res.format({
-    html: () => {
-      if (req && flash) req.flash(flash.type, flash.text);
-      res.redirect(url);
-    },
-    json: () => res.json(obj)
-  });
-}
+module.exports = utils;

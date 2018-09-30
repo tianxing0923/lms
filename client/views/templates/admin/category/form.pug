@@ -1,0 +1,10 @@
+md-input-container.md-block
+  label 名称
+  input(name='name', ng-model='form.name', required)
+  div(ng-messages='categoryForm.name.$error')
+    div(ng-message='required') 请输入名称
+md-input-container.md-block
+  label 描述
+  input(name='description', ng-model='form.description', required)
+  div(ng-messages='categoryForm.description.$error')
+    div(ng-message='required') 请输入描述

@@ -45,10 +45,26 @@ function buildTemplatePages(plugins) {
 }
 
 module.exports = function (options) {
+
+  // 变量配置
+  var config = {
+    api: (options.env == 'production' ? '"http://api.lms.com"' : '"http://localhost:5000"')
+  };
+
   var plugins = [
     options.vendorCss,
+    new webpack.DefinePlugin({
+      process: {
+        env: config
+      }
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['components', 'vendor', 'jquery', 'manifest'],
+      names: ['components', 'vendor', 'manifest'],
       minChunks: Infinity
     })
   ];
@@ -64,14 +80,15 @@ module.exports = function (options) {
         'angular',
         'angular-animate',
         'angular-aria',
+        'angular-sanitize',
         'angular-messages',
-        'angular-ui-router',
-        'angular-material'
+        'angular-ui-router'
       ],
       components: [
         'froala-editor',
-        'angular-material-data-table',
-        'angular-froala'
+        'angular-material',
+        'angular-froala',
+        'angular-material-data-table'
       ]
     },
     output: {

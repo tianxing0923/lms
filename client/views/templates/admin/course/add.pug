@@ -1,20 +1,10 @@
-//- md-dialog.md-content-overflow
-//-   form.course-from(name='courseForm', ng-submit='courseForm.$valid && submit()', layout='column', novalidate, ng-cloak)
-//-     md-toolbar
-//-       .md-toolbar-tools
-//-         h2 新增课程
-//-         div(flex='')
-//-         md-button.md-icon-button(ng-click='close()')
-//-           md-icon close
-//-     md-dialog-content.md-dialog-content(ng-include="'/templates/admin/course/form.html'")
-//-     md-dialog-actions(layout='row')
-//-       div(flex='')
-//-       md-button(ng-click='close()') 取消
-//-       md-button.md-primary(type='submit', ng-disabled='loading') 确定
-md-card(ng-controller='admin.course.add')
-  <md-card-content ng-include="'/templates/admin/course/form.html'">
-  </md-card-content>
-  <md-card-actions layout="row" layout-align="end center">
-    <md-button>Action 1</md-button>
-    <md-button>Action 2</md-button>
-  </md-card-actions>
+form.layout-padding(ng-controller='admin.course.add', name='courseForm', ng-submit='courseForm.$valid && submit()', novalidate)
+  div
+    md-button.md-fab.md-mini.md-primary(ui-sref='admin.course.list')
+      md-tooltip 返回
+      md-icon keyboard_arrow_left
+  div(ng-include="'/templates/admin/course/form.html'")
+  div(layout='row', layout-align='end center')
+    span(md-colors='{color: "red"}', ng-if="courseForm.$submitted && courseForm.$invalid") 表单错误，请检查！
+    md-button.md-raised(ui-sref='admin.course.list') 取消
+    md-button.md-raised.md-primary(type='submit', ng-disabled='loading') 提交

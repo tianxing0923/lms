@@ -5,56 +5,123 @@ module.exports = function (lmsApp) {
     $locationProvider.html5Mode(true);
 
     $urlRouterProvider.when('/', '/home');
-    $urlRouterProvider.when('/admin', '/admin/course');
+    $urlRouterProvider.when('/admin', '/admin/article');
+
+    $stateProvider.state('signin', {
+      url: '/signin',
+      templateUrl: '/templates/signin.html'
+    });
 
     // 首页
     $stateProvider.state('client', {
-      url: '/',
+      url: '',
       abstract: true,
       templateUrl: '/templates/client.html'
     });
 
     $stateProvider.state('client.home', {
-      url: 'home',
-      templateUrl: '/templates/article/list.html'
+      url: '/home',
+      templateUrl: '/templates/home/index.html'
     });
 
     // 精华
     $stateProvider.state('client.essence', {
-      url: 'essence',
-      templateUrl: '/templates/article/list.html'
+      url: '/essence',
+      templateUrl: '/templates/essence/index.html'
     });
 
     // 分享
     $stateProvider.state('client.share', {
-      url: 'share',
-      templateUrl: '/templates/article/list.html'
+      url: '/share',
+      templateUrl: '/templates/share/index.html'
     });
 
     // 问答
-    $stateProvider.state('client.qestion', {
-      url: 'qestion',
-      templateUrl: '/templates/article/list.html'
+    $stateProvider.state('client.question', {
+      url: '/question',
+      templateUrl: '/templates/question/index.html'
     });
+
 
     // 课程
-    $stateProvider.state('client.course', {
-      url: 'course',
-      template: 'bbb'
+    $stateProvider.state('course', {
+      url: '/course',
+      abstract: true,
+      templateUrl: '/templates/client.html'
+    });
+    // 课程列表
+    $stateProvider.state('course.list', {
+      url: '',
+      templateUrl: '/templates/course/index.html'
+    });
+    // 课程详情
+    $stateProvider.state('course.detail', {
+      url: '/:id',
+      templateUrl: '/templates/course/detail.html'
     });
 
-    // 文章
-    $stateProvider.state('client.article', {
-      url: 'article',
-      template: 'ccc'
+
+
+
+    /*********************我的文章*********************/
+    $stateProvider.state('article', {
+      url: '/article',
+      templateUrl: '/templates/client.html'
     });
-    $stateProvider.state('articledetail', {
-      url: '/article/:id',
-      template: 'sdfsdfds'
+    $stateProvider.state('article.share', {
+      url: '/share',
+      templateUrl: '/templates/article/share.html',
+      title: '我的分享'
+    });
+    $stateProvider.state('article.question', {
+      url: '/question',
+      templateUrl: '/templates/article/question.html',
+      title: '我的问题'
+    });
+    $stateProvider.state('article.reply', {
+      url: '/reply',
+      templateUrl: '/templates/article/reply.html',
+      title: '我的回复'
+    });
+    $stateProvider.state('article.create', {
+      url: '/create?type',
+      params: {
+        type: {
+          value: 'share'
+        }
+      },
+      templateUrl: '/templates/article/create.html',
+      title: '发布文章'
+    });
+    $stateProvider.state('article.edit', {
+      url: '/edit?id',
+      params: {
+        id: {
+          value: null
+        }
+      },
+      templateUrl: '/templates/article/edit.html',
+      title: '修改文章'
+    });
+    $stateProvider.state('article.detail', {
+      url: '/:id',
+      templateUrl: '/templates/article/detail.html'
     });
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    /*********************后台管理*********************/
 
     // 后台管理
     $stateProvider.state('admin', {
@@ -63,52 +130,91 @@ module.exports = function (lmsApp) {
       templateUrl: '/templates/admin.html'
     });
 
-    // 课程管理列表
+
+
+    /*********************文章管理*********************/
+
+    // 文章管理
+    $stateProvider.state('admin.article', {
+      url: '',
+      template: '<ui-view></ui-view>',
+    });
+
+    // 文章列表
+    $stateProvider.state('admin.article.list', {
+      url: '/article',
+      templateUrl: '/templates/admin/article/list.html',
+      title: '文章管理'
+    });
+
+
+
+    /*********************课程管理*********************/
+
+    // 课程管理
     $stateProvider.state('admin.course', {
       url: '',
       template: '<ui-view></ui-view>',
     });
 
-    // 课程管理列表
+    // 课程列表
     $stateProvider.state('admin.course.list', {
       url: '/course',
       templateUrl: '/templates/admin/course/list.html',
+      title: '课程管理'
     });
 
     // 课程添加
     $stateProvider.state('admin.course.add', {
-      url: '/add',
+      url: '/course/add',
       templateUrl: '/templates/admin/course/add.html',
-      data: {
-        title: '分类管理'
-      }
+      title: '新增课程'
     });
+
+    // 课程修改
+    $stateProvider.state('admin.course.edit', {
+      url: '/course/edit?id',
+      params: {
+        id: {
+          value: null
+        }
+      },
+      templateUrl: '/templates/admin/course/edit.html',
+      title: '修改课程'
+    });
+
+
+
+    /*********************分类管理*********************/
 
     // 分类管理
     $stateProvider.state('admin.category', {
-      url: '/category',
-      template: '分类管理',
-      data: {
-        title: '分类管理'
-      }
+      url: '',
+      template: '<ui-view></ui-view>',
     });
+
+    // 分类列表
+    $stateProvider.state('admin.category.list', {
+      url: '/category',
+      templateUrl: '/templates/admin/category/list.html',
+      title: '分类管理'
+    });
+
+
+
+    /*********************用户管理*********************/
 
     // 用户管理
     $stateProvider.state('admin.user', {
-      url: '/user',
-      template: '用户管理',
-      data: {
-        title: '用户管理'
-      }
+      url: '',
+      template: '<ui-view></ui-view>',
     });
 
-    // 角色管理
-    $stateProvider.state('admin.role', {
-      url: '/role',
-      template: '角色管理',
-      data: {
-        title: '角色管理'
-      }
+    // 用户列表
+    $stateProvider.state('admin.user.list', {
+      url: '/user',
+      templateUrl: '/templates/admin/user/list.html',
+      title: '用户管理'
     });
   }]);
 
@@ -121,13 +227,14 @@ module.exports = function (lmsApp) {
     });
 
     $rootScope.$on('$stateChangeSuccess', function (e, toState, toParams, fromState, fromParams) {
-      $rootScope.stateName = toState.name;
       $rootScope.state = toState;
+      $rootScope.stateName = toState.name;
       $rootScope.stateParams = toParams;
+      $rootScope.title = toState.title || '';
       $rootScope.loading = false;
     });
 
-    $rootScope.$on('$stateChangeError', function (e, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$stateChangeError', function (e, toState, toParams, fromState, fromParams, error) {
       $rootScope.loading = false;
 
       $log.error('An error occurred while changing states: ' + error);

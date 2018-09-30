@@ -1,0 +1,10 @@
+form.layout-padding(ng-controller='admin.course.edit', name='courseForm', ng-submit='courseForm.$valid && submit()', novalidate)
+  div
+    md-button.md-fab.md-mini.md-primary(ui-sref='admin.course.list')
+      md-tooltip 返回
+      md-icon keyboard_arrow_left
+  div(ng-include="'/templates/admin/course/form.html'")
+  div(layout='row', layout-align='end center')
+    span(md-colors='{color: "red"}', ng-if="courseForm.$submitted && courseForm.$invalid") 表单错误，请检查！
+    md-button.md-raised(ui-sref='admin.course.list') 取消
+    md-button.md-raised.md-primary(type='submit', ng-disabled='loading') 保存

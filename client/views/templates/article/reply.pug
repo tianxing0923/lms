@@ -1,0 +1,55 @@
+div(ng-controller='article.reply', ng-cloak)
+  md-button(ng-class="{'md-primary md-raised': searcher.type == 'article'}", ng-click="changeType('article')", aria-label='类型') 我参与回复的文章
+  md-button(ng-class="{'md-primary md-raised': searcher.type == 'course'}", ng-click="changeType('course')", aria-label='类型') 我参与回复的课程
+  md-card(ng-if="searcher.type == 'article'")
+    md-toolbar.md-table-toolbar.md-default
+      .md-toolbar-tools
+        h3.md-title(flex) 我参与回复的文章
+        md-button.md-icon-button.md-primary(ng-click='getList()')
+          md-tooltip 刷新
+          md-icon refresh
+    md-table-container
+      table(md-table)
+        thead(md-head)
+          tr(md-row)
+            th(md-column) 标题
+            th(md-column) 浏览
+            th(md-column) 回复
+            th(md-column) 创建时间
+            th(md-column) 更新时间
+        tbody(md-body)
+          tr(md-row, ng-repeat='item in list')
+            td(md-cell)
+              md-button.md-primary(ui-sref='article.detail({id: item._id._id})', target='_blank') {{item._id.title}}
+            td(md-cell) {{item._id.readCount}}
+            td(md-cell) {{item._id.commentCount}}
+            td(md-cell) {{item._id.createdAt | date: 'yyyy-MM-dd'}}
+            td(md-cell) {{item._id.updatedAt | date: 'yyyy-MM-dd'}}
+          tr(md-row, ng-show='list.length == 0')
+            td.tac(md-cell, colspan='5') 无数据
+  md-card(ng-if="searcher.type == 'course'")
+    md-toolbar.md-table-toolbar.md-default
+      .md-toolbar-tools
+        h3.md-title(flex) 我参与回复的课程
+        md-button.md-icon-button.md-primary(ng-click='getList()')
+          md-tooltip 刷新
+          md-icon refresh
+    md-table-container
+      table(md-table)
+        thead(md-head)
+          tr(md-row)
+            th(md-column) 标题
+            th(md-column) 作者
+            th(md-column) 浏览
+            th(md-column) 回复
+            th(md-column) 创建时间
+        tbody(md-body)
+          tr(md-row, ng-repeat='item in list')
+            td(md-cell)
+              md-button.md-primary(ui-sref='course.detail({id: item._id._id})', target='_blank') {{item._id.title}}
+            td(md-cell) {{item._id.lecturer}}
+            td(md-cell) {{item._id.readCount}}
+            td(md-cell) {{item._id.commentCount}}
+            td(md-cell) {{item._id.createdAt | date: 'yyyy-MM-dd'}}
+          tr(md-row, ng-show='list.length == 0')
+            td.tac(md-cell, colspan='5') 无数据

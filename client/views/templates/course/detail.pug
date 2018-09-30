@@ -1,0 +1,64 @@
+div(ng-controller='course.detail')
+  md-card.article
+    md-card-title
+      md-card-title-text
+        span.md-headline
+          span 【
+            span(ng-repeat='el in detail.categories', ng-bind="el.name + ($last ? '' : '、')")
+            | 】
+          | {{detail.title}}
+        span.md-subhead 发布于 {{detail.createdAt | friendly}} • {{detail.readCount}} 次浏览 • 作者 {{detail.lecturer}} {{detail.lecturerIntroduction}}
+    md-divider
+    md-card-content(ng-bind-html='safeHtml(detail.content)')
+  md-card.reply-wrap
+    .md-subheader
+      .md-subheader-inner
+        .md-subheader-content 所有回复（{{comments.length}}）
+    md-divider
+    md-list.comment-list
+      md-list-item.item(id='{{item._id}}', layout-align='start', ng-repeat='item in comments')
+        img.md-avatar(ng-src='{{item.user.avatar | avatar}}')
+        .md-list-item-text(flex)
+          div
+            span.name {{item.user.name}}
+            span &nbsp;•&nbsp;
+            span.floor {{$index + 1}}楼
+            span &nbsp;•&nbsp;
+            a.date(href='#{{item._id}}') {{item.createdAt | friendly}}
+            md-button.md-icon-button.fr(ng-click='deleteComment(item)', ng-if='item.user._id == guser._id')
+              md-icon delete
+            md-button.md-icon-button.fr(ng-click='showReply(item)')
+              md-icon reply
+          div(ng-bind-html='safeHtml(item.content)')
+          md-list.reply-list
+            md-list-item.reply-item(layout-align='start', ng-repeat='el in item.replies')
+              md-divider
+              img.md-avatar(ng-src='{{el.user.avatar | avatar}}')
+              .md-list-item-text(flex)
+                div
+                  span.name {{el.user.name}}
+                  span &nbsp;•&nbsp;
+                  a.date(href='#{{item._id}}') {{el.createdAt | friendly}}
+                  md-button.md-icon-button.fr(ng-click='deleteReply(item, el)', ng-if='el.user._id == guser._id')
+                    md-icon delete
+                  md-button.md-icon-button.fr(ng-click='showReply(item)')
+                    md-icon reply
+                div(ng-bind-html='safeHtml(el.content)')
+          div(ng-if='reply.commentId == item._id')
+            textarea(froala='editerConfig', ng-model='reply.content')
+            div(layout='row', layout-align='end center')
+              span(md-colors='{color: "red"}', ng-if='reply.invalid') 请输入回复内容
+              md-button.md-raised(ng-click='cancel()') 取消
+              md-button.md-raised.md-primary.nrm(ng-click='replyComment()', ng-disabled='loading') 回复
+        md-divider(ng-if='!$last')
+      md-list-item(ng-if='comments.length == 0')
+        div.tac(flex) 暂无回复
+  md-card.reply
+    .md-subheader
+      .md-subheader-inner
+        .md-subheader-content 添加回复
+    md-divider
+    textarea(name='content', froala='editerConfig', ng-model='comment.content', aria-label='回复内容')
+    div(layout='row', layout-align='end center')
+      span(md-colors='{color: "red"}', ng-if='comment.invalid') 请输入回复内容
+      md-button.md-raised.md-primary(ng-click='submit()', ng-disabled='loading') 回复

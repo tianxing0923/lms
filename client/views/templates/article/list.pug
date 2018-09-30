@@ -1,19 +1,14 @@
-div(ng-controller="home" ng-cloak)
-  md-list.article-list
-    md-list-item.md-no-style
-      md-button.md-no-style.md-list-item-inner(ui-sref='article')
-        img.md-avatar(src="http://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png")
-        span 200/300
-        span 精华
-        p 斯蒂芬的说法斯蒂芬森的方式的斯蒂芬斯多夫
-        span.date {{1485255064925 | friendly}}
-      md-divider(ng-if='!$last')
-    md-list-item
-      md-button.md-no-style.md-list-item-inner(ui-sref='article')
-        img.md-avatar(src="http://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png")
-        span 200/300
-        span 精华
-        p 斯蒂芬的说法斯蒂芬森的方式的斯蒂芬斯多夫
-        span 一天前
-      md-divider(ng-if='!$last')
-  pagination(current='1', pages='10', steps='5', changed='onPageChanged()', align="'center center'")
+md-button(ng-repeat='item in categories', ng-class="{'md-primary md-raised': searcher.category == item._id}", ng-bind='item.name', ng-click='changeCategory($event, item)', aria-label='{{item.name}}')
+md-list.article-list
+  md-list-item(ng-repeat='item in list')
+    md-button.md-no-style.md-list-item-inner(ui-sref='article.detail({id: item._id})', target='_blank')
+      img.md-avatar(ng-src='{{item.user.avatar | avatar}}')
+      span.count {{item.commentCount}}/{{item.readCount}}
+      span.top(ng-if='item.top') 置顶
+      span.essence(ng-if='item.essence') 精华
+      p {{item.title}}
+      span.date {{item.createdAt | friendly}}
+    md-divider(ng-if='!$last')
+  md-list-item(ng-if='list.length == 0 && !loading')
+    div.tac(flex) 暂无数据
+md-table-pagination(md-label='{page: "页数", rowsPerPage: "每页", of: "总数"}', md-limit-options='[10, 20, 30, 50, 100]', md-limit='searcher.size', md-page='searcher.page', md-total='{{searcher.total}}', md-on-paginate='getList', md-page-select)
