@@ -11,7 +11,7 @@ var imageStorage = multer.diskStorage({
   // 文件保存路径
   destination: (req, file, cb) => {
     var str = moment().format('YYYYMMDD');
-    var path = 'server/upload/images/' + str;
+    var path = 'server/uploads/images/' + str;
     if (!fs.existsSync(path)){
       fs.mkdirSync(path);
     }
@@ -36,7 +36,7 @@ var videoStorage = multer.diskStorage({
   // 文件保存路径
   destination: (req, file, cb) => {
     var str = moment().format('YYYYMMDD');
-    var path = 'server/upload/videos/' + str;
+    var path = 'server/uploads/videos/' + str;
     if (!fs.existsSync(path)){
       fs.mkdirSync(path);
     }
@@ -65,7 +65,7 @@ router.post('/image', imageUpload.single('file'), async (ctx, next) => {
 
 
 // 上传视频
-router.post('/video', videoUpload.signle('file'), async (ctx, next) => {
+router.post('/video', videoUpload.single('file'), async (ctx, next) => {
   var path = ctx.req.file.destination.substring('server/upload'.length);
   ctx.status = 200;
   ctx.body = {

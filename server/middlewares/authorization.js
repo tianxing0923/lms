@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const ExtendError = require('../utils/extend_error');
 const user = require('../api/v1/user');
 
+// 登录，拉取用户信息
 const fetchUser = async (username, password) => {
   var data = await user.signin({
     username: username,
@@ -26,6 +27,8 @@ passport.deserializeUser(async function (id, done) {
   }
 })
 
+
+// 本地登录校验
 passport.use(new LocalStrategy(async (username, password, done) => {
   var data = await fetchUser(username, password);
   done(null, data);
@@ -51,49 +54,3 @@ exports.isAdmin = async (ctx, next) => {
     ctx.body = '访问被拒绝';
   }
 };
-
-
-// /*
-//  *  User authorization routing middleware
-//  */
-
-// exports.user = {
-//   hasAuthorization: function (req, res, next) {
-//     if (req.profile.id != req.user.id) {
-//       req.flash('info', 'You are not authorized');
-//       return res.redirect('/users/' + req.profile.id);
-//     }
-//     next();
-//   }
-// };
-
-// /*
-//  *  Article authorization routing middleware
-//  */
-
-// exports.article = {
-//   hasAuthorization: function (req, res, next) {
-//     if (req.article.user.id != req.user.id) {
-//       req.flash('info', 'You are not authorized');
-//       return res.redirect('/articles/' + req.article.id);
-//     }
-//     next();
-//   }
-// };
-
-// /**
-//  * Comment authorization routing middleware
-//  */
-
-// exports.comment = {
-//   hasAuthorization: function (req, res, next) {
-//     // if the current user is comment owner or article owner
-//     // give them authority to delete
-//     if (req.user.id === req.comment.user.id || req.user.id === req.article.user.id) {
-//       next();
-//     } else {
-//       req.flash('info', 'You are not authorized');
-//       res.redirect('/articles/' + req.article.id);
-//     }
-//   }
-// };

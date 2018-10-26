@@ -94,28 +94,9 @@ exports.delete = async (_id) => {
   }
 };
 
-// /**
-//  * Auth callback
-//  */
-
-// exports.authCallback = signin;
-
-// /**
-//  * Session
-//  */
-// exports.session = signin;
-
-// /**
-//  * 用户登录
-//  */
-// function signin(req, res) {
-//   const redirectTo = req.session.returnTo ?
-//     req.session.returnTo :
-//     '/';
-//   delete req.session.returnTo;
-//   res.redirect(redirectTo);
-// }
-
+/**
+ * 用户登录
+ */
 exports.signin = async (data) => {
   try {
     var result = {

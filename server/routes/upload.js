@@ -11,7 +11,7 @@ var imageStorage = multer.diskStorage({
   // 文件保存路径
   destination: (req, file, cb) => {
     var str = moment().format('YYYYMMDD');
-    var path = 'server/upload/images/' + str;
+    var path = 'server/uploads/images/' + str;
     if (!fs.existsSync(path)){
       fs.mkdirSync(path);
     }
