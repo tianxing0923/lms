@@ -18,30 +18,26 @@ const Course = mongoose.model('Course');
  * @return {array}         列表数组
  */
 exports.list = async (params) => {
-  try {
-    params.page = parseInt(params.page, 10);
-    params.size = parseInt(params.size, 10);
-    let data = {
-      list: [],
-      page: params.page,
-      size: params.size,
-      total: 0
+  params.page = parseInt(params.page, 10);
+  params.size = parseInt(params.size, 10);
+  let data = {
+    list: [],
+    page: params.page,
+    size: params.size,
+    total: 0
+  };
+  let query = {
+    status: 1,
+  };
+  if (params.category) {
+    query.categories = {
+      $in: params.category
     };
-    let query = {
-      status: 1,
-    };
-    if (params.category) {
-      query.categories = {
-        $in: params.category
-      };
-    }
-    data.list = await Course.find(query, '-lecturerIntroduction -content -__v', {skip: (params.page - 1) * params.size, limit: params.size})
-      .populate('categories', 'name');
-    data.total = await Course.countDocuments(query);
-    return data;
-  } catch (e) {
-    throw new ExtendError(500, e);
   }
+  data.list = await Course.find(query, '-lecturerIntroduction -content -__v', {skip: (params.page - 1) * params.size, limit: params.size})
+    .populate('categories', 'name');
+  data.total = await Course.countDocuments(query);
+  return data;
 };
 
 
@@ -52,23 +48,22 @@ exports.list = async (params) => {
  *   size  {number}   页大小
  * @return {array}         列表数组
  */
-exports.listbyadmin = async (params) => {
-  try {
-    params.page = parseInt(params.page, 10);
-    params.size = parseInt(params.size, 10);
-    let data = {
-      list: [],
-      page: params.page,
-      size: params.size,
-      total: 0
-    };
-    data.list = await Course.find({status: 1}, '-lecturerIntroduction -summary -content -__v', {skip: (params.page - 1) * params.size, limit: params.size})
-      .populate('categories', 'name');
-    data.total = await Course.countDocuments({status: 1});
-    return data;
-  } catch (e) {
-    throw new ExtendError(500, e);
-  }
+exports.listByAdmin = async (params) => {
+  params.page = parseInt(params.page, 10);
+  params.size = parseInt(params.size, 10);
+  let data = {
+    list: [],
+    page: params.page,
+    size: params.size,
+    total: 0
+  };
+  let query = {
+    status: 1,
+  };
+  data.list = await Course.find(query, '-lecturerIntroduction -summary -content -__v', {skip: (params.page - 1) * params.size, limit: params.size})
+    .populate('categories', 'name');
+  data.total = await Course.countDocuments(query);
+  return data;
 };
 
 
@@ -76,43 +71,62 @@ exports.listbyadmin = async (params) => {
  * 获取课程信息
  */
 exports.load = async (_id) => {
-  try {
-    var detail = await Course.findOne({_id: _id, status: 1}, '-__v')
-      .populate('categories', 'name');
-    if (!detail) {
-      throw new ExtendError(404, '课程不存在');
-    }
-    return detail;
-  } catch (e) {
-    throw new ExtendError(500, e);
+  var detail = await Course.findOne({_id: _id, status: 1}, '-__v')
+    .populate('categories', 'name');
+
+  if (!detail) {
+    throw new ExtendError(404, '课程不存在');
+  } else {
+    Course.findOneAndUpdate({_id: _id}, {$inc:{readCount: 1}}, function () {
+      console.log('阅读量+1成功')
+    });
   }
+  return detail;
+};
+
+
+/**
+ * 获取课程信息【管理员使用】
+ */
+exports.loadByAdmin = async (_id) => {
+  var detail = await Course.findOne({_id: _id, status: 1}, '-__v');
+  if (!detail) {
+    throw new ExtendError(404, '课程不存在');
+  }
+  return detail;
+};
+
+// 设置表单数据
+const setFormData = (body) => {
+  var data = {};
+  if (body) {
+    data.title = body.title;
+    data.lecturer = body.lecturer;
+    data.lecturerIntroduction = body.lecturerIntroduction;
+    data.categories = body.categories;
+    data.summary = body.summary;
+    data.content = body.content;
+  } else {
+    throw new ExtendError(422, '参数不完整');
+  }
+  return data;
 };
 
 /**
  * 创建课程
  */
-exports.create = async (data) => {
-  try {
-    const category = new Course(data);
-    return await category.save();
-  } catch (e) {
-    const errors = Object.keys(e.errors)
-      .map(field => e.errors[field].message);
-    throw new ExtendError(500, errors);
-  }
+exports.create = async (body) => {
+  var data = setFormData(body);
+  const category = new Course(data);
+  return await category.save();
 };
 
 /**
  * 修改课程
  */
-exports.update = async (_id, data) => {
-  try {
-    return await Course.findByIdAndUpdate(_id, data);
-  } catch (err) {
-    const errors = Object.keys(err.errors)
-      .map(field => err.errors[field].message);
-    throw new ExtendError(500, errors);
-  }
+exports.update = async (_id, body) => {
+  var data = setFormData(body);
+  return await Course.findOneAndUpdate({_id: _id}, data);
 };
 
 
@@ -120,11 +134,5 @@ exports.update = async (_id, data) => {
  * 删除课程
  */
 exports.delete = async (_id) => {
-  try {
-    return await Course.findByIdAndUpdate(_id, {status: 0});
-  } catch (err) {
-    const errors = Object.keys(err.errors)
-      .map(field => err.errors[field].message);
-    throw new ExtendError(500, errors);
-  }
+  return await Course.findOneAndUpdate({_id: _id}, {status: 0});
 };

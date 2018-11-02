@@ -12,7 +12,22 @@ module.exports = function (services) {
       $http({
         method: 'POST',
         url: config.api + '/sign/in',
-        data: data,
+        data: data
+      }).then(function (result) {
+        utility.resultHandler(d, result);
+      });
+      return d.promise;
+    };
+
+    /**
+     * 退出
+     * @return {string}        操作提示
+     */
+    this.signout = function (data) {
+      var d = $q.defer();
+      $http({
+        method: 'POST',
+        url: config.api + '/sign/out'
       }).then(function (result) {
         utility.resultHandler(d, result);
       });

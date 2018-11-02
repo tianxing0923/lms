@@ -21,15 +21,16 @@ module.exports = function (lmsApp) {
     // image配置
     imageInsertButtons: ['imageUpload', 'imageByURL'],
     imageEditButtons: ['imageReplace', 'imageRemove', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', 'imageAlt'],
-    imageUploadURL: '/api/upload/image',
+    imageUploadURL: '/api/admin/upload/image',
     imageDefaultWidth: 0,
 
     // video配置
     videoInsertButtons: ['videoBack', '|', 'videoUpload', 'videoEmbed', 'videoByURL'],
     videoEditButtons: ['videoReplace', 'videoRemove', 'videoSize'],
-    videoUploadURL: '/api/upload/video',
+    videoUploadURL: '/api/admin/upload/video',
     videoDefaultWidth: 0,
     videoMove: false,
+    videoMaxSize: 1024 * 1024 * 1024 * 2, // 2GB
 
     // 监听事件隐藏版权信息
     events: {

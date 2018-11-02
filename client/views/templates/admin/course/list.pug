@@ -17,7 +17,8 @@ div(ng-controller='admin.course', ng-cloak)
           th(md-column) 操作
       tbody(md-body)
         tr(md-row, ng-repeat='item in list')
-          td(md-cell) {{item.title}}
+          td(md-cell)
+            md-button.md-primary(ui-sref='course.detail({id: item._id})', target='_blank') {{item.title}}
           td(md-cell) {{item.lecturer}}
           td(md-cell)
             span(ng-repeat='el in item.categories', ng-bind="el.name + ($last ? '' : '、')")

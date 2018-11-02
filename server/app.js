@@ -40,7 +40,7 @@ var api = require('./routes/api');
 app.use(cors({
   credentials: true
 }));
-app.use(serve(path.join(__dirname, 'upload')));
+app.use(serve(path.join(__dirname, 'uploads')));
 app.use(bodyparser());
 app.use(logger());
 
@@ -56,15 +56,18 @@ app.use(async (ctx, next) => {
     await next();
   } catch (e) {
     var status = e.status || 500;
-    var message = e.message || '服务器错误';
-
-    ctx.status = status;
-    ctx.body = message;
+    var message = e.message || '服务器异常';
 
     // 触发 koa 统一错误事件，可以打印出详细的错误堆栈 log
     if (status == 500) {
+      if (e.errors) {
+        message = Object.keys(e.errors).map(field => e.errors[field].message);
+      }
+
       app.emit('error', e, ctx);
     }
+    ctx.status = status;
+    ctx.body = message;
   }
 });
 

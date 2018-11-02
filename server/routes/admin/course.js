@@ -3,7 +3,7 @@ const course = require('../../api/v1/course');
 
 // 获取列表
 router.get('/', async (ctx, next) => {
-  var data = await course.list({
+  var data = await course.listByAdmin({
     page: ctx.query.page,
     size: ctx.query.size
   });
@@ -13,7 +13,7 @@ router.get('/', async (ctx, next) => {
 
 // 获取详情
 router.get('/:id', async (ctx, next) => {
-  var data = await course.load(ctx.params.id);
+  var data = await course.loadByAdmin(ctx.params.id);
   ctx.status = 200;
   ctx.body = data;
 });
@@ -26,10 +26,6 @@ router.post('/', async (ctx, next) => {
 
 // 修改课程
 router.put('/:id', async (ctx, next) => {
-  delete ctx.request.body.commentCount;
-  delete ctx.request.body.createdAt;
-  delete ctx.request.body.readCount;
-  delete ctx.request.body.status;
   var data = await course.update(ctx.params.id, ctx.request.body);
   ctx.status = 201;
 });

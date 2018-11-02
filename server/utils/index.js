@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 var utils = {
   // 获取随机文件名
   getFilename: function (req, file, cb) {

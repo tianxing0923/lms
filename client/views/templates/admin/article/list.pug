@@ -22,7 +22,7 @@ div(ng-controller='admin.article', ng-cloak)
       tbody(md-body)
         tr(md-row, ng-repeat='item in list')
           td(md-cell)
-            md-button.md-primary(ui-sref='article.share', target='_blank') {{item.title}}
+            md-button.md-primary(ui-sref='article.detail({id: item._id})', target='_blank') {{item.title}}
           td(md-cell) {{item.type == 'share' ? '分享' : '问答'}}
           td(md-cell)
             span(ng-repeat='el in item.categories', ng-bind="el.name + ($last ? '' : '、')")

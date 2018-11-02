@@ -32,6 +32,9 @@ import services from './services';
 import filters from './filters';
 import directives from './directives';
 
+// directives
+
+
 // filters
 import friendly from './filters/friendly';
 import green from './filters/green';
@@ -64,17 +67,12 @@ import question from './controllers/question';
 import course from './controllers/course';
 import courseDetail from './controllers/course/detail';
 
-
 import articleDetail from './controllers/article/detail';
 import articleShare from './controllers/article/share';
 import articleQuestion from './controllers/article/question';
 import articleCreate from './controllers/article/create';
 import articleEidt from './controllers/article/edit';
 import articleReply from './controllers/article/reply';
-
-
-
-
 
 
 
@@ -129,6 +127,7 @@ green(filters);
 avatar(filters);
 
 // directives
+
 
 // services
 coursesApi(services);

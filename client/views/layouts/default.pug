@@ -8,6 +8,6 @@ html(ng-app='lms', lang='zh-cn')
     base(href='/')
     block title
       title(ng-bind="title + (title ? ' - ' : '') + '企业在线学习系统'") 企业在线学习系统
-  body(ng-controller='main', ng-cloak)
+  body
     md-progress-linear.loading(md-mode='indeterminate', ng-show='loading')
     block content

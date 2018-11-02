@@ -2,14 +2,14 @@ aside(ng-controller='sidebar', flex='20')
   md-card(md-theme='default')
     md-card-title
       md-card-title-text
-        span(class='md-headline') {{user.name}}
-        span(class='md-subhead')
-          | {{user.position}}
+        span(class='md-headline') {{guser.name}}
+        span(class='md-subhead', ng-bind='guser.position')
+          | {{guser.position}}
           br
-          | {{user.department}}
+          | {{guser.department}}
       md-card-title-media
         div(class='md-media-sm card-media')
-          img(ng-src='{{user.avatar}}')
+          img(ng-src='{{guser.avatar}}')
     md-card-actions(layout='row', layout-align='end center')
       md-button.md-raised.md-primary(ui-sref="article.create({type: 'share'})") 分享
       md-button.md-raised.md-primary(ui-sref="article.create({type: 'question'})") 提问

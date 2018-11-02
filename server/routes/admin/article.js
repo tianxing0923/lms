@@ -3,7 +3,7 @@ const article = require('../../api/v1/article');
 
 // 获取列表
 router.get('/', async (ctx, next) => {
-  var data = await article.listbyadmin({
+  var data = await article.listByAdmin({
     page: ctx.query.page,
     size: ctx.query.size
   });
@@ -11,21 +11,9 @@ router.get('/', async (ctx, next) => {
   ctx.body = data;
 });
 
-// 获取详情
-router.get('/:id', async (ctx, next) => {
-  var data = await article.load(ctx.params.id);
-  ctx.status = 200;
-  ctx.body = data;
-});
-
-// 新增文章
-router.post('/', async (ctx, next) => {
-  var data = await article.create(ctx.request.body);
-  ctx.status = 201;
-});
-
 // 修改文章
 router.put('/:id', async (ctx, next) => {
+  var status = 201;
   switch (ctx.request.body.action) {
   case 'essence':
     await article.essence(ctx.params.id);
@@ -40,23 +28,15 @@ router.put('/:id', async (ctx, next) => {
     await article.untop(ctx.params.id);
     break;
   default:
-    delete ctx.request.body.type;
-    delete ctx.request.body.user;
-    delete ctx.request.body.readCount;
-    delete ctx.request.body.commentCount;
-    delete ctx.request.body.essence;
-    delete ctx.request.body.top;
-    delete ctx.request.body.status;
-    delete ctx.request.body.createdAt;
-    await article.update(ctx.params.id, ctx.request.body);
+    status = 404;
     break;
   }
-  ctx.status = 201;
+  ctx.status = status;
 });
 
 // 删除文章
 router.delete('/:id', async (ctx, next) => {
-  var data = await article.delete(ctx.params.id);
+  var data = await article.deleteByAdmin(ctx.params.id);
   ctx.status = 204;
 });
 

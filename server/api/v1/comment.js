@@ -1,6 +1,8 @@
 'use strict';
 
 require('../../models/comment');
+require('../../models/article');
+require('../../models/course');
 
 /**
  * 课程
@@ -8,6 +10,8 @@ require('../../models/comment');
 const mongoose = require('mongoose');
 const ExtendError = require('../../utils/extend_error');
 const Comment = mongoose.model('Comment');
+const Article = mongoose.model('Article');
+const Course = mongoose.model('Course');
 
 
 /**
@@ -17,110 +21,140 @@ const Comment = mongoose.model('Comment');
  * @return {array}         列表数组
  */
 exports.list = async (params) => {
-  try {
-    let query = {
-      reference: params.reference
-    };
-    return await Comment.find(query, '-__v').populate('user', '-password -salt -role -__v').populate('replies.user', '-password -salt -role -__v');
-  } catch (e) {
-    throw new ExtendError(500, e);
-  }
+  let query = {
+    reference: params.reference
+  };
+  return await Comment.find(query, '-__v').populate('user', '-password -salt -role -__v').populate('replies.user', '-password -salt -role -__v');
 };
 
 
 /**
  * 获取文章列表【我参与回复的文章or课程】
  * @param  {object} params 查询条件
+ *   ctx   {object}   koa上下文
  *   type  {number}   类型（文章or课程）
  * @return {array}         列表数组
  */
-exports.listbyself = async (params) => {
-  try {
-    let data = [];
-    let user = new mongoose.Types.ObjectId('5b86744b21b34a5bb9f82baa');
-    let query = {
-      type: params.type,
-      $or: [{
-        user: user
-      }, {
-        replies: {
-          $elemMatch: {
-            user: user
-          }
+exports.listBySelf = async (ctx, params) => {
+  let data = [];
+  let userId = ctx.state.user._id;
+  let query = {
+    type: params.type,
+    $or: [{
+      user: userId
+    }, {
+      replies: {
+        $elemMatch: {
+          user: userId
         }
-      }]
-    };
-    // let populateParams = {};
-    // if (params.type == 'article') {
-    //   populateParams = {path: 'reference', model: 'Article', select: '-content -__v'};
-    // } else if (params.type == 'course') {
-    //   populateParams = {path: 'reference', model: 'Course', select: '-lecturerIntroduction -content -__v'};
-    // }
-    let loopupOpts = {};
-    if (params.type == 'article') {
-      loopupOpts = {from: 'articles', localField: '_id', foreignField: '_id', as: '_id'};
-    } else if (params.type == 'course') {
-      loopupOpts = {from: 'courses', localField: '_id', foreignField: '_id', as: '_id'};
-    }
-
-    data = await Comment.aggregate([
-      {$match: query},
-      {$group: {_id: '$reference'}},
-      {$lookup: loopupOpts},
-      {$unwind: '$_id'}
-    ])
-    return data;
-  } catch (e) {
-    throw new ExtendError(500, e);
+      }
+    }]
+  };
+  let loopupOpts = {};
+  if (params.type == 'article') {
+    loopupOpts = {from: 'articles', localField: '_id', foreignField: '_id', as: '_id'};
+  } else if (params.type == 'course') {
+    loopupOpts = {from: 'courses', localField: '_id', foreignField: '_id', as: '_id'};
   }
+
+  data = await Comment.aggregate([
+    {$match: query},
+    {$group: {_id: '$reference'}},
+    {$lookup: loopupOpts},
+    {$unwind: '$_id'}
+  ])
+  return data;
 };
 
 /**
  * 创建评论
  */
-exports.create = async (data) => {
-  try {
-    data.user = '5b86744b21b34a5bb9f82baa';
-    const comment = new Comment(data);
-    return await comment.save();
-  } catch (e) {
-    const errors = Object.keys(e.errors)
-      .map(field => e.errors[field].message);
-    throw new ExtendError(500, errors);
+exports.create = async (ctx, body) => {
+  let data = {};
+  if (body) {
+    data.content = body.content;
+    data.user = ctx.state.user._id;
+    data.type = body.type;
+    data.reference = body.reference;
+  } else {
+    throw new ExtendError(422, '参数不完整');
   }
+  let comment = new Comment(data);
+  let result = await comment.save();
+  if (result) {
+    switch(result.type) {
+      case 'article':
+        Article.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: 1}}, function () {
+          console.log('文章评论量+1成功')
+        });
+      break;
+      case 'course':
+        Course.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: 1}}, function () {
+          console.log('课程评论量+1成功')
+        });
+      break;
+    }
+  }
+  return result;
 };
 
 
 /**
  * 创建评论回复
  */
-exports.createReply = async (data) => {
-  try {
-    let comment = await Comment.findOne({_id: data.commentId});
-    comment.replies.push({
-      user: '5b86744b21b34a5bb9f82baa',
-      content: data.content
-    });
-    return await comment.save();
-  } catch (e) {
-    const errors = Object.keys(e.errors)
-      .map(field => e.errors[field].message);
-    throw new ExtendError(500, errors);
+exports.createReply = async (ctx, data) => {
+  let comment = await Comment.findOne({_id: data.commentId});
+  comment.replies.push({
+    user: ctx.state.user._id,
+    content: data.content
+  });
+  var result = await comment.save();
+  if (result) {
+    switch(result.type) {
+      case 'article':
+        Article.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: 1}}, function () {
+          console.log('文章评论量+1成功')
+        });
+      break;
+      case 'course':
+        Course.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: 1}}, function () {
+          console.log('课程评论量+1成功')
+        });
+      break;
+    }
   }
+  return result;
 };
 
 
 /**
  * 删除评论
  */
-exports.delete = async (_id) => {
-  try {
-    return await Comment.findOneAndDelete({_id: _id});
-  } catch (err) {
-    const errors = Object.keys(err.errors)
-      .map(field => err.errors[field].message);
-    throw new ExtendError(500, errors);
+exports.delete = async (ctx, _id) => {
+  if (ctx.state.user.role !== 'admin') {
+    let comment = await Comment.findOne({_id: _id});
+    if (!comment.user.equals(ctx.state.user._id)) {
+      throw new ExtendError(400, '无权删除其他人的评论');
+    }
   }
+
+  var result = await Comment.findOneAndDelete({_id: _id});
+  if (result) {
+    let count = -1 - result.replies.length;
+    switch(result.type) {
+      case 'article':
+        Article.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: count}}, function () {
+          console.log('文章评论量-' + count + '成功')
+        });
+      break;
+      case 'course':
+        Course.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: count}}, function () {
+          console.log('课程评论量-' + count + '成功')
+        });
+      break;
+    }
+  }
+  return result;
 };
 
 
@@ -128,13 +162,22 @@ exports.delete = async (_id) => {
  * 删除评论回复
  */
 exports.deleteReply = async (commentId, _id) => {
-  try {
-    var comment = await Comment.findOne({_id: commentId});
-    comment.replies.id(_id).remove();
-    return await comment.save();
-  } catch (err) {
-    const errors = Object.keys(err.errors)
-      .map(field => err.errors[field].message);
-    throw new ExtendError(500, errors);
+  var comment = await Comment.findOne({_id: commentId});
+  comment.replies.id(_id).remove();
+  var result = await comment.save();
+  if (result) {
+    switch(result.type) {
+      case 'article':
+        Article.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: -1}}, function () {
+          console.log('文章评论量-1成功')
+        });
+      break;
+      case 'course':
+        Course.findOneAndUpdate({_id: result.reference}, {$inc:{commentCount: -1}}, function () {
+          console.log('课程评论量-1成功')
+        });
+      break;
+    }
   }
+  return result;
 };

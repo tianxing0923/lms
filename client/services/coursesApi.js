@@ -33,16 +33,50 @@ module.exports = function (services) {
       return d.promise;
     };
 
+
+    /*********************后台使用*********************/
+
+    /**
+     * 获取列表数据
+     * @param  {object} params 搜索参数
+     * @return {object}        列表数据
+     */
+    this.listByAdmin = function (params) {
+      var d = $q.defer();
+      $http({
+        url: '/api/admin/courses',
+        params: params,
+      }).then(function (result) {
+        utility.resultHandler(d, result);
+      });
+      return d.promise;
+    };
+
+    /**
+     * 获得单条数据
+     * @param  {string} id 课程ID
+     * @return {object}    课程详情
+     */
+    this.detailByAdmin = function (id) {
+      var d = $q.defer();
+      $http({
+        url: '/api/admin/courses/' + id
+      }).then(function (result) {
+        utility.resultHandler(d, result);
+      });
+      return d.promise;
+    };
+
     /**
      * 添加数据
      * @param  {object} data 数据
      * @return {string}      操作提示
      */
-    this.add = function (data) {
+    this.addByAdmin = function (data) {
       var d = $q.defer();
       $http({
         method: 'POST',
-        url: '/api/courses',
+        url: '/api/admin/courses',
         data: data
       }).then(function (result) {
         utility.resultHandler(d, result);
@@ -59,7 +93,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'PUT',
-        url: '/api/courses/' + data._id,
+        url: '/api/admin/courses/' + data._id,
         data: data
       }).then(function (result) {
         utility.resultHandler(d, result);
@@ -76,7 +110,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'DELETE',
-        url: '/api/courses/' + id
+        url: '/api/admin/courses/' + id
       }).then(function (result) {
         utility.resultHandler(d, result);
       });

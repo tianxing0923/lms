@@ -1,6 +1,6 @@
 // 顶部
 module.exports = function (lmsApp) {
-  lmsApp.controller('topbar', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+  lmsApp.controller('topbar', ['$scope', '$mdSidenav', 'usersApi', function ($scope, $mdSidenav, usersApi) {
 
     // 展开侧边栏
     $scope.toggle = function () {
@@ -9,8 +9,10 @@ module.exports = function (lmsApp) {
 
     // 退出
     $scope.signout = function () {
-      console.log('signout');
-      location.href = '/signin.html';
+      usersApi.signout().then(function () {
+        console.log('signout');
+        location.href = '/signin';
+      });
     };
   }]);
 };

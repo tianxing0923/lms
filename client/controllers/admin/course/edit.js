@@ -46,7 +46,7 @@ module.exports = function (lmsApp) {
 
     // 获取详情
     var getDetail = function () {
-      coursesApi.detail($stateParams.id).then(function (result) {
+      coursesApi.detailByAdmin($stateParams.id).then(function (result) {
         $scope.form = result;
       });
     };

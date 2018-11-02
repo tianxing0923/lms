@@ -10,7 +10,7 @@ router.get('/', async (ctx, next) => {
 
 // 获取列表【我的文章】
 router.get('/self', async (ctx, next) => {
-  var data = await article.listbyself({
+  var data = await article.listBySelf(ctx, {
     type: ctx.query.type,
     page: ctx.query.page,
     size: ctx.query.size
@@ -35,7 +35,7 @@ router.get('/loadbyedit/:id', async (ctx, next) => {
 
 // 新增文章
 router.post('/', async (ctx, next) => {
-  var data = await article.create(ctx.request.body);
+  var data = await article.create(ctx, ctx.request.body);
   ctx.status = 201;
 });
 
@@ -58,7 +58,7 @@ router.put('/:id', async (ctx, next) => {
 
 // 删除文章
 router.delete('/:id', async (ctx, next) => {
-  var data = await article.delete(ctx.params.id);
+  var data = await article.delete(ctx, ctx.params.id);
   ctx.status = 204;
 });
 

@@ -1,11 +1,14 @@
 // 导航
 module.exports = function (lmsApp) {
-  lmsApp.controller('navbar', ['$scope', function ($scope) {
+  lmsApp.controller('navbar', ['$scope', 'usersApi', function ($scope, usersApi) {
 
     // 退出
     $scope.signout = function () {
-      console.log('signout');
-      location.href = '/signin.html';
+      usersApi.signout().then(function () {
+        debugger
+        console.log('signout');
+        location.href = '/signin';
+      });
     };
   }]);
 };

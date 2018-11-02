@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const fs = require('fs');
 const moment = require('moment');
 const router = require('koa-router')();
@@ -33,7 +32,7 @@ var imageUpload = multer({
 
 // 上传图片
 router.post('/image', imageUpload.single('file'), async (ctx, next) => {
-  var path = ctx.req.file.destination.substring('server/upload'.length);
+  var path = ctx.req.file.destination.substring('server/uploads'.length);
   ctx.status = 200;
   ctx.body = {
     link: config.url + path + '/' + ctx.req.file.filename

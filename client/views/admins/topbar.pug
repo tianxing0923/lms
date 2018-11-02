@@ -5,7 +5,7 @@ md-toolbar.topbar.md-menu-toolbar.md-whiteframe-2dp(ng-controller='topbar', layo
   span(ng-bind='title')
   div(flex)
   div(layout='row', layout-align='start center')
-    img.avatar(src='https://oa.mokylin.com/Content/images/avatar/2014-08-21/5d46df74-b3ea-488f-b8ad-402a3d42c43f.png')
+    img.avatar(ng-src='{{guser.avatar}}')
     span.username &#x7530;&#x661F;
   md-button.md-icon-button(ui-sref='client.home')
     md-tooltip 返回前台
