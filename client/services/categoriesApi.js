@@ -4,14 +4,28 @@ module.exports = function (services) {
 
     /**
      * 获取列表数据
-     * @param  {object} params 搜索参数
      * @return {object}        列表数据
      */
     this.list = function (params) {
       var d = $q.defer();
       $http({
-        url: '/api/categories',
-        params: params,
+        url: '/api/categories'
+      }).then(function (result) {
+        utility.resultHandler(d, result);
+      });
+      return d.promise;
+    };
+
+    /**
+     * 获取列表数据【管理后台使用】
+     * @param  {object} params 搜索参数
+     * @return {object}        列表数据
+     */
+    this.listByAdmin = function (params) {
+      var d = $q.defer();
+      $http({
+        url: '/api/admin/categories',
+        params: params
       }).then(function (result) {
         utility.resultHandler(d, result);
       });
@@ -26,7 +40,7 @@ module.exports = function (services) {
     this.detail = function (id) {
       var d = $q.defer();
       $http({
-        url: '/api/categories/' + id
+        url: '/api/admin/categories/' + id
       }).then(function (result) {
         utility.resultHandler(d, result);
       });
@@ -42,7 +56,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'POST',
-        url: '/api/categories',
+        url: '/api/admin/categories',
         data: data
       }).then(function (result) {
         utility.resultHandler(d, result);
@@ -59,7 +73,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'PUT',
-        url: '/api/categories/' + data._id,
+        url: '/api/admin/categories/' + data._id,
         data: data
       }).then(function (result) {
         utility.resultHandler(d, result);
@@ -76,7 +90,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'DELETE',
-        url: '/api/categories/' + id
+        url: '/api/admin/categories/' + id
       }).then(function (result) {
         utility.resultHandler(d, result);
       });

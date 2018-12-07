@@ -75,7 +75,7 @@ exports.load = async (_id) => {
     .populate('categories', 'name');
 
   if (!detail) {
-    throw new ExtendError(404, '课程不存在');
+    throw new ExtendError(404, '课程不存在或已被删除');
   } else {
     Course.findOneAndUpdate({_id: _id}, {$inc:{readCount: 1}}, function () {
       console.log('阅读量+1成功')
@@ -91,7 +91,7 @@ exports.load = async (_id) => {
 exports.loadByAdmin = async (_id) => {
   var detail = await Course.findOne({_id: _id, status: 1}, '-__v');
   if (!detail) {
-    throw new ExtendError(404, '课程不存在');
+    throw new ExtendError(404, '课程不存在或已被删除');
   }
   return detail;
 };

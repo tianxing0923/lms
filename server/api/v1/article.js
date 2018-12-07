@@ -114,7 +114,11 @@ exports.load = async (_id) => {
   var detail = await Article.findOne({_id: _id, status: 1}, '-__v')
     .populate('categories', 'name').populate('user', '-password -salt -role -__v');
   if (!detail) {
-    throw new ExtendError(404, '文章不存在');
+    throw new ExtendError(404, '文章不存在或已被删除');
+  } else {
+    Article.findOneAndUpdate({_id: _id}, {$inc:{readCount: 1}}, function () {
+      console.log('阅读量+1成功')
+    });
   }
   return detail;
 };
@@ -126,7 +130,7 @@ exports.load = async (_id) => {
 exports.loadbyedit = async (_id) => {
   var detail = await Article.findOne({_id: _id, status: 1}, '-__v');
   if (!detail) {
-    throw new ExtendError(404, '文章不存在');
+    throw new ExtendError(404, '文章不存在或已被删除');
   }
   return detail;
 };

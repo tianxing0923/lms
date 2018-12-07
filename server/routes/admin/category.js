@@ -3,7 +3,7 @@ const category = require('../../api/v1/category');
 
 // 获取列表
 router.get('/', async (ctx, next) => {
-  var data = await category.list({
+  var data = await category.listByAdmin({
     page: ctx.query.page,
     size: ctx.query.size
   });

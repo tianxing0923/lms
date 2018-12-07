@@ -17,6 +17,18 @@ const Category = mongoose.model('Category');
  * @return {array}         列表数组
  */
 exports.list = async (params) => {
+  return await Category.find({status: 1}, '-__v');
+};
+
+
+/**
+ * 获取分类列表【管理后台使用】
+ * @param  {object} params 查询条件
+ *   page  {number}   页索引
+ *   size  {number}   页大小
+ * @return {array}         列表数组
+ */
+exports.listByAdmin = async (params) => {
   params.page = parseInt(params.page, 10);
   params.size = parseInt(params.size, 10);
   let data = {

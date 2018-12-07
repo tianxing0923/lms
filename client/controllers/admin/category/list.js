@@ -14,7 +14,7 @@ module.exports = function (lmsApp) {
 
     // 获取列表数据
     $scope.getList = function () {
-      categoriesApi.list($scope.searcher).then(function (result) {
+      categoriesApi.listByAdmin($scope.searcher).then(function (result) {
         $scope.list = result.list;
         $scope.searcher.page = result.page;
         $scope.searcher.size = result.size;

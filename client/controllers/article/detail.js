@@ -34,6 +34,15 @@ module.exports = function (lmsApp) {
       return $sce.trustAsHtml(content);
     };
 
+    // 计算评论数量
+    $scope.commentsCount = function (comments) {
+      var count = comments.length;
+      for (var i = comments.length - 1; i >= 0; i--) {
+        count += comments[i].replies.length;
+      }
+      return count;
+    };
+
     // 显示回复富文本
     $scope.showReply = function (item) {
       $scope.reply.commentId = item._id;

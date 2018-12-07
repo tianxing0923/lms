@@ -26,20 +26,6 @@ const UserSchema = new Schema({
 const validatePresenceOf = value => value && value.length;
 
 /**
- * Virtuals
- */
-// UserSchema
-//   .virtual('password')
-//   .set(function (password) {
-//     this._password = password;
-//     this.salt = this.makeSalt();
-//     this.password = this.encryptPassword(password);
-//   })
-//   .get(function () {
-//     return this._password;
-//   });
-
-/**
  * 字段校验
  */
 UserSchema.path('username').validate(function (username) {

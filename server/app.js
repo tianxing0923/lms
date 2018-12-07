@@ -29,14 +29,14 @@ const sessionConfig = {
   renew: false, /* 当会话几乎过期时更新会话，因此我们可以始终保持用户登录 */
 };
 
-// Use native Promise
+// 使用原生Promise
 mongoose.Promise = global.Promise;
 
-// routes
+// 路由routes
 var sign = require('./routes/sign');
 var api = require('./routes/api');
 
-// middlewares
+// middlewares中间件
 app.use(cors({
   credentials: true
 }));
@@ -50,7 +50,7 @@ app.use(session(sessionConfig, app));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// 错误处理
+// 统一错误处理
 app.use(async (ctx, next) => {
   try {
     await next();

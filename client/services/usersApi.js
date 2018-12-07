@@ -56,23 +56,8 @@ module.exports = function (services) {
     this.list = function (params) {
       var d = $q.defer();
       $http({
-        url: config.api + '/api/users',
+        url: config.api + '/api/admin/users',
         params: params,
-      }).then(function (result) {
-        utility.resultHandler(d, result);
-      });
-      return d.promise;
-    };
-
-    /**
-     * 获得单条数据
-     * @param  {string} id 用户ID
-     * @return {object}    用户详情
-     */
-    this.detail = function (id) {
-      var d = $q.defer();
-      $http({
-        url: config.api + '/api/users/' + id
       }).then(function (result) {
         utility.resultHandler(d, result);
       });
@@ -88,7 +73,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'POST',
-        url: config.api + '/api/users',
+        url: config.api + '/api/admin/users',
         data: data
       }).then(function (result) {
         utility.resultHandler(d, result);
@@ -105,7 +90,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'PUT',
-        url: config.api + '/api/users/' + data._id,
+        url: config.api + '/api/admin/users/' + data._id,
         data: data
       }).then(function (result) {
         utility.resultHandler(d, result);
@@ -122,7 +107,7 @@ module.exports = function (services) {
       var d = $q.defer();
       $http({
         method: 'DELETE',
-        url: config.api + '/api/users/' + id
+        url: config.api + '/api/admin/users/' + id
       }).then(function (result) {
         utility.resultHandler(d, result);
       });

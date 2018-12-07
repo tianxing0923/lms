@@ -41,7 +41,6 @@ router.post('/', async (ctx, next) => {
 
 // 修改文章
 router.put('/:id', async (ctx, next) => {
-  debugger
   var body = ctx.request.body;
   delete body.type;
   delete body.user;

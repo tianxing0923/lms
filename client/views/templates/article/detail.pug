@@ -10,7 +10,7 @@ div(ng-controller='article.detail')
   md-card.reply-wrap
     .md-subheader
       .md-subheader-inner
-        .md-subheader-content 所有回复（{{comments.length}}）
+        .md-subheader-content 所有回复（{{commentsCount(comments)}}）
     md-divider
     md-list.comment-list
       md-list-item.item(id='{{item._id}}', layout-align='start', ng-repeat='item in comments')

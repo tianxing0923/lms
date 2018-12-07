@@ -35,11 +35,8 @@ module.exports = function (lmsApp) {
 
     // 获取分类列表
     var getCategories = function () {
-      categoriesApi.list({
-        page: 1,
-        size: 99999
-      }).then(function (result) {
-        $scope.categories = result.list;
+      categoriesApi.list().then(function (result) {
+        $scope.categories = result;
       });
     }
 

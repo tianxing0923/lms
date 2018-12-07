@@ -31,12 +31,14 @@ router.post('/reply', async (ctx, next) => {
 
 // 删除评论
 router.delete('/:id', async (ctx, next) => {
+  debugger
   var data = await comment.delete(ctx, ctx.params.id);
   ctx.status = 204;
 });
 
 // 删除评论回复
 router.delete('/:commentId/:id', async (ctx, next) => {
+  debugger
   var data = await comment.deleteReply(ctx, ctx.params.commentId, ctx.params.id);
   ctx.status = 204;
 });

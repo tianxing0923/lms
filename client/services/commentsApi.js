@@ -85,7 +85,6 @@ module.exports = function (services) {
       return d.promise;
     };
 
-
     /**
      * 修改评论回复
      * @param  {string} commentId 评论ID

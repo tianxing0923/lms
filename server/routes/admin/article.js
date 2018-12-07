@@ -11,7 +11,7 @@ router.get('/', async (ctx, next) => {
   ctx.body = data;
 });
 
-// 修改文章
+// 置顶、精华
 router.put('/:id', async (ctx, next) => {
   var status = 201;
   switch (ctx.request.body.action) {

@@ -161,8 +161,14 @@ exports.delete = async (ctx, _id) => {
 /**
  * 删除评论回复
  */
-exports.deleteReply = async (commentId, _id) => {
-  var comment = await Comment.findOne({_id: commentId});
+exports.deleteReply = async (ctx, commentId, _id) => {
+  let comment = await Comment.findOne({_id: commentId});
+  if (ctx.state.user.role !== 'admin') {
+    if (!comment.user.equals(ctx.state.user._id)) {
+      throw new ExtendError(400, '无权删除其他人的评论');
+    }
+  }
+
   comment.replies.id(_id).remove();
   var result = await comment.save();
   if (result) {
